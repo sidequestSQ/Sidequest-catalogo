@@ -12,6 +12,11 @@ export type ChannelType =
   | 'shopee'
   | 'outro';
 
+export type ChannelPurpose =
+  | 'divulgacao'
+  | 'contato'
+  | 'venda';
+
 export type PromotionStatus =
   | 'agendada'
   | 'ativa'
@@ -37,8 +42,10 @@ export interface OfficialChannel {
   id: string;
   name: string;
   type: ChannelType;
+  purpose: ChannelPurpose;
   url: string;
   active: boolean;
+  showOnProducts: boolean;
   icon?: string;
 }
 

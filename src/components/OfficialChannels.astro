@@ -1,0 +1,176 @@
+---
+import { channels } from '../data/channels';
+import { isValidOfficialChannel } from '../utils/channels';
+
+const generalChannels = channels.filter(
+  (channel) =>
+    isValidOfficialChannel(channel) &&
+    (
+      channel.purpose === 'divulgacao' ||
+      channel.purpose === 'contato'
+    )
+);
+
+const channelDescriptions = {
+  instagram:
+    'Acompanhe novidades, produtos, eventos e conteúdos da Side Quest.',
+
+  whatsapp:
+    'Fale diretamente com a Side Quest para tirar dúvidas e receber atendimento.',
+};
+
+const channelActions = {
+  instagram: 'Conhecer Instagram',
+  whatsapp: 'Falar no WhatsApp',
+};
+---
+
+<section class="official-channels">
+  <div class="container">
+    <div class="section-heading">
+      <div>
+        <span class="eyebrow">CANAIS OFICIAIS</span>
+
+        <h2>Encontre a Side Quest</h2>
+
+        <p>
+          Acompanhe a loja ou fale diretamente com a gente
+          pelos nossos canais oficiais.
+        </p>
+      </div>
+    </div>
+
+    <div class="channel-grid">
+      {generalChannels.map((channel) => (
+        <article class="channel-card">
+          <div class="channel-icon" aria-hidden="true">
+            {channel.type === 'instagram' ? '◎' : '◌'}
+          </div>
+
+          <div class="channel-content">
+            <h3>{channel.name}</h3>
+
+            <p>
+              {
+                channelDescriptions[
+                  channel.type as keyof typeof channelDescriptions
+                ]
+              }
+            </p>
+
+            <a
+              class="channel-action"
+              href={channel.url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {
+                channelActions[
+                  channel.type as keyof typeof channelActions
+                ]
+              }
+
+              <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .official-channels {
+    padding: 76px 0;
+  }
+
+  .section-heading {
+    max-width: 680px;
+    margin-bottom: 28px;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    margin-bottom: 9px;
+    color: var(--color-primary-light);
+    font-size: 0.75rem;
+    font-weight: 900;
+    letter-spacing: 0.16em;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+    letter-spacing: -0.025em;
+  }
+
+  .section-heading p {
+    margin: 12px 0 0;
+    color: var(--color-text-muted);
+  }
+
+  .channel-grid {
+    display: grid;
+    gap: 14px;
+  }
+
+  .channel-card {
+    display: flex;
+    gap: 18px;
+    padding: 22px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    transition:
+      transform 0.2s ease,
+      border-color 0.2s ease;
+  }
+
+  .channel-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(145, 134, 189, 0.35);
+  }
+
+  .channel-icon {
+    display: grid;
+    flex: 0 0 48px;
+    width: 48px;
+    height: 48px;
+    place-items: center;
+    border-radius: 14px;
+    background: var(--color-surface-soft);
+    color: var(--color-primary-light);
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  .channel-content {
+    min-width: 0;
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 1.05rem;
+  }
+
+  .channel-content p {
+    margin: 6px 0 14px;
+    color: var(--color-text-muted);
+    font-size: 0.88rem;
+  }
+
+  .channel-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--color-primary-light);
+    font-size: 0.85rem;
+    font-weight: 800;
+  }
+
+  @media (min-width: 700px) {
+    .channel-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

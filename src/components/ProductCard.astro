@@ -1,0 +1,248 @@
+---
+import type { Product } from '../types/catalog';
+
+import { formatPrice } from '../utils/price';
+import { getCategoryName } from '../utils/products';
+import {
+  getProductStatusLabel,
+  isProductAvailable,
+} from '../utils/status';
+import {
+  getPrimaryProductImage,
+} from '../utils/images';
+import {
+  getProductPrice,
+} from '../utils/promotions';
+
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
+
+const image =
+  getPrimaryProductImage(product);
+
+const categoryName =
+  getCategoryName(
+    product.categoryId
+  );
+
+const statusLabel =
+  getProductStatusLabel(
+    product.status
+  );
+
+const available =
+  isProductAvailable(
+    product.status
+  );
+
+const price =
+  getProductPrice(product);
+---
+
+<article class="product-card">
+  <a
+    href={`/produto/${product.slug}/`}
+    class="product-link"
+    aria-label={`Ver ${product.name}`}
+  >
+    <div class="product-image">
+      {image ? (
+        <img
+          src={image.src}
+          alt={image.alt}
+          loading="lazy"
+        />
+      ) : (
+        <span>Sem imagem</span>
+      )}
+
+      {product.status !==
+        'disponivel' && (
+        <span class="status-badge">
+          {statusLabel}
+        </span>
+      )}
+
+      {price.discountCents > 0 && (
+        <span class="discount-badge">
+          -{price.discountPercent}%
+        </span>
+      )}
+    </div>
+
+    <div class="product-content">
+      <div class="product-category">
+        {categoryName}
+      </div>
+
+      <h2>{product.name}</h2>
+
+      <p class="product-description">
+        {product.shortDescription}
+      </p>
+
+      <div class="product-footer">
+        <div class="price-area">
+          {price.discountCents > 0 && (
+            <span class="old-price">
+              {formatPrice(
+                price.originalPriceCents
+              )}
+            </span>
+          )}
+
+          <strong class="product-price">
+            {formatPrice(
+              price.finalPriceCents
+            )}
+          </strong>
+        </div>
+
+        <span
+          class:list={{
+            availability: true,
+            'availability-available':
+              available,
+          }}
+        >
+          {available
+            ? 'Disponível'
+            : statusLabel}
+        </span>
+      </div>
+    </div>
+  </a>
+</article>
+
+<style>
+  .product-card {
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    transition:
+      transform 0.2s ease,
+      border-color 0.2s ease;
+  }
+
+  .product-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(
+      145,
+      134,
+      189,
+      0.4
+    );
+  }
+
+  .product-link {
+    display: block;
+  }
+
+  .product-image {
+    position: relative;
+    display: grid;
+    aspect-ratio: 1;
+    place-items: center;
+    overflow: hidden;
+    background: var(--color-surface-soft);
+    color: var(--color-text-muted);
+  }
+
+  .product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .status-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    padding: 6px 9px;
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    background: rgba(
+      21,
+      24,
+      39,
+      0.9
+    );
+    color: var(--color-text);
+    font-size: 0.72rem;
+    font-weight: 800;
+  }
+
+  .discount-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 6px 9px;
+    border-radius: 999px;
+    background: var(--color-primary);
+    color: var(--color-text);
+    font-size: 0.72rem;
+    font-weight: 800;
+  }
+
+  .product-content {
+    padding: 18px;
+  }
+
+  .product-category {
+    margin-bottom: 7px;
+    color: var(--color-primary-light);
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 1.1rem;
+    line-height: 1.25;
+  }
+
+  .product-description {
+    margin: 9px 0 16px;
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+  }
+
+  .product-footer {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .price-area {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .old-price {
+    color: var(--color-text-muted);
+    font-size: 0.78rem;
+    text-decoration: line-through;
+  }
+
+  .product-price {
+    font-size: 1.15rem;
+  }
+
+  .availability {
+    color: var(--color-text-muted);
+    font-size: 0.72rem;
+    font-weight: 800;
+  }
+
+  .availability-available {
+    color: var(--color-success);
+  }
+</style>

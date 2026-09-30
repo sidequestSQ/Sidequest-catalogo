@@ -1,0 +1,118 @@
+---
+import type { OfficialChannel } from '../types/catalog';
+import { isValidOfficialChannel } from '../utils/channels';
+
+interface Props {
+  channel: OfficialChannel;
+  productName?: string;
+  message?: string;
+}
+
+const {
+  channel,
+  productName,
+  message,
+} = Astro.props;
+
+const defaultMessages = {
+  divulgacao:
+    'Conheça a Side Quest no Instagram.',
+
+  contato: productName
+    ? `Olá! Gostaria de saber mais sobre o produto ${productName}.`
+    : 'Olá! Gostaria de saber mais sobre um produto da Side Quest.',
+
+  venda: productName
+    ? `Olá! Tenho interesse em comprar o produto ${productName}.`
+    : 'Olá! Tenho interesse em um produto da Side Quest.',
+};
+
+const channelMessage =
+  message?.trim() ||
+  defaultMessages[channel.purpose];
+
+const isValidChannel =
+  isValidOfficialChannel(channel);
+
+let href = channel.url;
+
+if (channel.type === 'whatsapp' && isValidChannel) {
+  const separator = channel.url.includes('?')
+    ? '&'
+    : '?';
+
+  href =
+    `${channel.url}${separator}` +
+    `text=${encodeURIComponent(channelMessage)}`;
+}
+
+const labels = {
+  divulgacao: 'Conhecer canal',
+  contato: 'Falar com a Side Quest',
+  venda: 'Comprar',
+};
+
+const label = labels[channel.purpose];
+---
+
+{isValidChannel && (
+  <a
+    class="channel-button"
+    href={href}
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <span class="channel-name">
+      {channel.name}
+    </span>
+
+    <span class="channel-action">
+      {label}
+    </span>
+  </a>
+)}
+
+<style>
+  .channel-button {
+    display: flex;
+    min-height: 54px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 0 18px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    color: var(--color-text);
+    transition:
+      background 0.2s ease,
+      border-color 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .channel-button:hover {
+    transform: translateY(-2px);
+    border-color: rgba(145, 134, 189, 0.4);
+    background: var(--color-surface-soft);
+  }
+
+  .channel-name {
+    font-weight: 800;
+  }
+
+  .channel-action {
+    color: var(--color-primary-light);
+    font-size: 0.82rem;
+    font-weight: 700;
+  }
+
+  @media (max-width: 420px) {
+    .channel-button {
+      align-items: flex-start;
+      flex-direction: column;
+      justify-content: center;
+      gap: 2px;
+      padding: 12px 16px;
+    }
+  }
+</style>

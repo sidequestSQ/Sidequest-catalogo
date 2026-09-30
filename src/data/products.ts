@@ -18,10 +18,6 @@ export const products: Product[] = [
     tags: ['pelúcia', 'geek', 'colecionável'],
     channels: [
       {
-        channelId: 'instagram',
-        active: true,
-      },
-      {
         channelId: 'whatsapp',
         active: true,
       },

@@ -1,15 +1,19 @@
 :root {
-  --color-bg: #080b18;
-  --color-surface: #0d1122;
-  --color-surface-soft: #151a2f;
-  --color-primary: #ffb52e;
-  --color-primary-light: #ffe36b;
-  --color-accent: #ff7a18;
-  --color-text: #f7f8fc;
-  --color-text-muted: #aeb5c7;
-  --color-border: rgba(255, 255, 255, 0.1);
-  --color-success: #4ade80;
-  --color-danger: #f87171;
+  --color-bg: #151827;
+  --color-surface: #1c2032;
+  --color-surface-soft: #252a3d;
+
+  --color-primary: #7667a8;
+  --color-primary-light: #9186bd;
+  --color-accent: #627a9e;
+
+  --color-text: #e4e5ec;
+  --color-text-muted: #a5a9b8;
+
+  --color-border: rgba(220, 224, 240, 0.1);
+
+  --color-success: #75a58a;
+  --color-danger: #b87982;
 
   --radius-sm: 8px;
   --radius-md: 14px;
@@ -75,7 +79,7 @@ button {
 
 ::selection {
   background: var(--color-primary);
-  color: var(--color-bg);
+  color: var(--color-text);
 }
 
 .container {

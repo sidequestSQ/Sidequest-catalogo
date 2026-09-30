@@ -1,0 +1,422 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import { products } from '../../data/products';
+import { categories } from '../../data/categories';
+---
+
+<Layout
+  title="Catálogo — Side Quest"
+  description="Confira todos os produtos disponíveis no catálogo oficial da Side Quest."
+>
+  <section class="catalog-page">
+    <div class="container">
+      <header class="catalog-header">
+        <span class="eyebrow">CATÁLOGO</span>
+
+        <h1>Encontre sua próxima Side Quest.</h1>
+
+        <p>
+          Explore nossos produtos geek, colecionáveis e novidades.
+        </p>
+      </header>
+
+      <div
+        class="catalog-tools"
+        aria-label="Ferramentas do catálogo"
+      >
+        <div class="search-box">
+          <label for="product-search">
+            Buscar produto
+          </label>
+
+          <input
+            id="product-search"
+            type="search"
+            placeholder="Buscar por nome, produto ou palavra-chave..."
+            autocomplete="off"
+          />
+        </div>
+
+        <div class="category-box">
+          <label for="category-filter">
+            Categoria
+          </label>
+
+          <select id="category-filter">
+            <option value="">
+              Todas as categorias
+            </option>
+
+            {categories
+              .filter((category) => category.active)
+              .map((category) => (
+                <option value={category.id}>
+                  {category.name}
+                </option>
+              ))}
+          </select>
+        </div>
+
+        <button
+          id="clear-filters"
+          class="clear-button"
+          type="button"
+        >
+          Limpar filtros
+        </button>
+      </div>
+
+      <div
+        class="catalog-summary"
+        aria-live="polite"
+      >
+        <strong id="product-count">
+          {
+            products.filter(
+              (product) =>
+                product.status !== 'oculto'
+            ).length
+          }
+        </strong>
+
+        <span>produtos encontrados</span>
+      </div>
+
+      <div
+        class="product-grid"
+        id="product-grid"
+      >
+        {products
+          .filter(
+            (product) =>
+              product.status !== 'oculto'
+          )
+          .map((product) => (
+            <div
+              class="product-item"
+              data-category={product.categoryId}
+              data-search={[
+                product.name,
+                product.shortDescription,
+                product.description,
+                product.sku,
+                product.subcategory ?? '',
+                ...product.tags,
+              ]
+                .join(' ')
+                .toLocaleLowerCase('pt-BR')}
+            >
+              <ProductCard product={product} />
+            </div>
+          ))}
+      </div>
+
+      <div
+        id="no-results"
+        class="no-results"
+        hidden
+      >
+        <strong>
+          Nenhum produto encontrado.
+        </strong>
+
+        <p>
+          Tente buscar outro termo ou remover
+          algum filtro.
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  const searchInput =
+    document.querySelector(
+      '#product-search'
+    ) as HTMLInputElement | null;
+
+  const categoryFilter =
+    document.querySelector(
+      '#category-filter'
+    ) as HTMLSelectElement | null;
+
+  const clearButton =
+    document.querySelector(
+      '#clear-filters'
+    ) as HTMLButtonElement | null;
+
+  const productItems = Array.from(
+    document.querySelectorAll<HTMLElement>(
+      '.product-item'
+    )
+  );
+
+  const productCount =
+    document.querySelector(
+      '#product-count'
+    ) as HTMLElement | null;
+
+  const noResults =
+    document.querySelector(
+      '#no-results'
+    ) as HTMLElement | null;
+
+  function filterProducts() {
+    const searchTerm =
+      searchInput?.value
+        .trim()
+        .toLocaleLowerCase('pt-BR') ?? '';
+
+    const selectedCategory =
+      categoryFilter?.value ?? '';
+
+    let visibleProducts = 0;
+
+    productItems.forEach((item) => {
+      const category =
+        item.dataset.category ?? '';
+
+      const searchableText =
+        item.dataset.search ?? '';
+
+      const matchesSearch =
+        !searchTerm ||
+        searchableText.includes(searchTerm);
+
+      const matchesCategory =
+        !selectedCategory ||
+        category === selectedCategory;
+
+      const visible =
+        matchesSearch &&
+        matchesCategory;
+
+      item.hidden = !visible;
+
+      if (visible) {
+        visibleProducts += 1;
+      }
+    });
+
+    if (productCount) {
+      productCount.textContent =
+        String(visibleProducts);
+    }
+
+    if (noResults) {
+      noResults.hidden =
+        visibleProducts !== 0;
+    }
+  }
+
+  function applyUrlFilters() {
+    const params =
+      new URLSearchParams(
+        window.location.search
+      );
+
+    const category =
+      params.get('categoria');
+
+    if (
+      categoryFilter &&
+      category &&
+      Array.from(categoryFilter.options).some(
+        (option) =>
+          option.value === category
+      )
+    ) {
+      categoryFilter.value = category;
+    }
+  }
+
+  searchInput?.addEventListener(
+    'input',
+    filterProducts
+  );
+
+  categoryFilter?.addEventListener(
+    'change',
+    filterProducts
+  );
+
+  clearButton?.addEventListener(
+    'click',
+    () => {
+      if (searchInput) {
+        searchInput.value = '';
+      }
+
+      if (categoryFilter) {
+        categoryFilter.value = '';
+      }
+
+      filterProducts();
+
+      searchInput?.focus();
+    }
+  );
+
+  applyUrlFilters();
+  filterProducts();
+</script>
+
+<style>
+  .catalog-page {
+    padding: 64px 0 80px;
+  }
+
+  .catalog-header {
+    max-width: 720px;
+    margin-bottom: 36px;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    margin-bottom: 12px;
+    color: var(--color-primary-light);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+  }
+
+  .catalog-header p {
+    margin: 18px 0 0;
+    color: var(--color-text-muted);
+    font-size: 1.05rem;
+  }
+
+  .catalog-tools {
+    display: grid;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding: 18px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+  }
+
+  .search-box,
+  .category-box {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .search-box label,
+  .category-box label {
+    color: var(--color-text-muted);
+    font-size: 0.78rem;
+    font-weight: 800;
+  }
+
+  input,
+  select {
+    width: 100%;
+    min-height: 48px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    outline: none;
+    background: var(--color-surface-soft);
+    color: var(--color-text);
+    padding: 0 14px;
+  }
+
+  input::placeholder {
+    color: var(--color-text-muted);
+  }
+
+  input:focus,
+  select:focus {
+    border-color: var(--color-primary);
+  }
+
+  .clear-button {
+    min-height: 48px;
+    align-self: end;
+    padding: 0 16px;
+    border-radius: var(--radius-md);
+    background: transparent;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    font-weight: 700;
+  }
+
+  .clear-button:hover {
+    background: var(--color-surface-soft);
+    color: var(--color-text);
+  }
+
+  .catalog-summary {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 20px;
+    color: var(--color-text-muted);
+    font-size: 0.88rem;
+  }
+
+  .catalog-summary strong {
+    color: var(--color-text);
+  }
+
+  .product-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .product-item[hidden] {
+    display: none;
+  }
+
+  .no-results {
+    padding: 42px 20px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    text-align: center;
+  }
+
+  .no-results strong {
+    display: block;
+    font-size: 1.1rem;
+  }
+
+  .no-results p {
+    margin: 8px 0 0;
+    color: var(--color-text-muted);
+  }
+
+  @media (min-width: 600px) {
+    .catalog-tools {
+      grid-template-columns:
+        minmax(0, 1.5fr)
+        minmax(180px, 0.8fr)
+        auto;
+      align-items: end;
+      padding: 20px;
+    }
+
+    .product-grid {
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 900px) {
+    .product-grid {
+      grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+      gap: 24px;
+    }
+  }
+</style>
