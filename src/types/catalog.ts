@@ -71,7 +71,7 @@ export interface Product {
   description: string;
   categoryId: string;
   subcategory?: string;
-  basePrice: number;
+  basePriceCents: number;
   images: ProductImage[];
   status: ProductStatus;
   sku: string;

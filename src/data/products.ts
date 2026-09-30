@@ -9,7 +9,7 @@ export const products: Product[] = [
     description:
       'Uma pelúcia colecionável com acabamento especial, ideal para decoração, presente ou coleção.',
     categoryId: 'pelucias',
-    basePrice: 54.9,
+    basePriceCents: 5490,
     images: [],
     status: 'disponivel',
     sku: 'SQ-PEL-001',
