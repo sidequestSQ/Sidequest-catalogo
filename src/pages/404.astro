@@ -1,0 +1,190 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Página não encontrada — Side Quest"
+  description="A página que você procura não foi encontrada no catálogo da Side Quest."
+>
+  <main class="error-page">
+    <div class="container">
+      <section class="error-content" aria-labelledby="error-title">
+        <div class="error-code" aria-hidden="true">404</div>
+
+        <span class="error-eyebrow">MISSÃO NÃO ENCONTRADA</span>
+
+        <h1 id="error-title">
+          Parece que essa página saiu da rota.
+        </h1>
+
+        <p>
+          O endereço pode estar incorreto, ter sido removido ou a página
+          pode não existir mais.
+        </p>
+
+        <div class="error-actions">
+          <a class="primary-button" href="/">
+            Voltar ao início
+          </a>
+
+          <a class="secondary-button" href="/catalogo/">
+            Explorar catálogo
+          </a>
+        </div>
+      </section>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .error-page {
+    min-height: 62vh;
+    display: grid;
+    place-items: center;
+    padding: 72px 0 96px;
+  }
+
+  .error-content {
+    position: relative;
+    max-width: 680px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .error-content::before,
+  .error-content::after {
+    position: absolute;
+    z-index: -1;
+    border-radius: 50%;
+    content: "";
+    pointer-events: none;
+  }
+
+  .error-content::before {
+    top: -90px;
+    left: 15%;
+    width: 220px;
+    height: 220px;
+    background: rgba(118, 103, 168, 0.11);
+    filter: blur(60px);
+  }
+
+  .error-content::after {
+    right: 5%;
+    bottom: -60px;
+    width: 170px;
+    height: 170px;
+    background: rgba(95, 200, 216, 0.07);
+    filter: blur(55px);
+  }
+
+  .error-code {
+    margin-bottom: -4px;
+    color: rgba(145, 134, 189, 0.13);
+    font-size: clamp(6rem, 24vw, 11rem);
+    font-weight: 900;
+    letter-spacing: -0.08em;
+    line-height: 0.85;
+    user-select: none;
+  }
+
+  .error-eyebrow {
+    display: inline-block;
+    margin-bottom: 14px;
+    color: var(--color-cyan);
+    font-size: 0.75rem;
+    font-weight: 850;
+    letter-spacing: 0.16em;
+  }
+
+  h1 {
+    max-width: 620px;
+    margin: 0 auto;
+    color: var(--color-text);
+    font-size: clamp(2rem, 6vw, 3.4rem);
+    line-height: 1.06;
+    letter-spacing: -0.04em;
+  }
+
+  p {
+    max-width: 520px;
+    margin: 18px auto 0;
+    color: var(--color-text-muted);
+    font-size: 1rem;
+  }
+
+  .error-actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 30px;
+  }
+
+  .primary-button,
+  .secondary-button {
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+    border-radius: var(--radius-md);
+    font-size: 0.9rem;
+    font-weight: 800;
+    transition:
+      transform var(--transition-base),
+      border-color var(--transition-base),
+      background var(--transition-base),
+      color var(--transition-base);
+  }
+
+  .primary-button {
+    border: 1px solid rgba(145, 134, 189, 0.28);
+    background: var(--color-primary);
+    color: #ffffff;
+  }
+
+  .primary-button:hover {
+    transform: translateY(-2px);
+    background: var(--color-primary-light);
+  }
+
+  .secondary-button {
+    border: 1px solid var(--color-border-strong);
+    background: var(--color-surface);
+    color: var(--color-text);
+  }
+
+  .secondary-button:hover {
+    transform: translateY(-2px);
+    border-color: rgba(95, 200, 216, 0.28);
+    background: var(--color-surface-soft);
+  }
+
+  @media (max-width: 480px) {
+    .error-page {
+      padding: 56px 0 76px;
+    }
+
+    .error-actions {
+      flex-direction: column;
+    }
+
+    .primary-button,
+    .secondary-button {
+      width: 100%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .primary-button,
+    .secondary-button {
+      transition: none;
+    }
+
+    .primary-button:hover,
+    .secondary-button:hover {
+      transform: none;
+    }
+  }
+</style>

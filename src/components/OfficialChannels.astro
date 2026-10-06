@@ -11,166 +11,1583 @@ const generalChannels = channels.filter(
     )
 );
 
+const featuredChannel = generalChannels.find(
+  (channel) => channel.type === 'instagram'
+);
+
+const secondaryChannels = generalChannels.filter(
+  (channel) => channel.type !== 'instagram'
+);
+
 const channelDescriptions = {
   instagram:
-    'Acompanhe novidades, produtos, eventos e conteúdos da Side Quest.',
+    'Acompanhe novidades, produtos, eventos, bastidores e conteúdos da Side Quest.',
 
   whatsapp:
     'Fale diretamente com a Side Quest para tirar dúvidas e receber atendimento.',
 };
 
 const channelActions = {
-  instagram: 'Conhecer Instagram',
+  instagram: 'Acessar Instagram oficial',
   whatsapp: 'Falar no WhatsApp',
 };
 ---
 
 <section class="official-channels">
   <div class="container">
-    <div class="section-heading">
-      <div>
-        <span class="eyebrow">CANAIS OFICIAIS</span>
+    <div class="section-intro">
+      <div class="intro-copy">
+        <div class="section-label">
+          <span class="label-mark"></span>
+          <span>CANAIS OFICIAIS</span>
+        </div>
 
-        <h2>Encontre a Side Quest</h2>
+        <h2>
+          Continue sua jornada
+          <span>com a Side Quest.</span>
+        </h2>
 
         <p>
-          Acompanhe a loja ou fale diretamente com a gente
-          pelos nossos canais oficiais.
+          O catálogo mostra os produtos. Para acompanhar novidades,
+          tirar dúvidas ou comprar, você pode falar diretamente
+          pelos canais oficiais da Side Quest.
         </p>
+      </div>
+
+      <div class="intro-decoration" aria-hidden="true">
+        <span class="deco-line"></span>
+        <span class="deco-diamond"></span>
+        <span class="deco-line"></span>
       </div>
     </div>
 
-    <div class="channel-grid">
-      {generalChannels.map((channel) => (
-        <article class="channel-card">
-          <div class="channel-icon" aria-hidden="true">
-            {channel.type === 'instagram' ? '◎' : '◌'}
+    {featuredChannel && (
+      <a
+        class="featured-channel"
+        href={featuredChannel.url}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <div class="featured-background" aria-hidden="true"></div>
+
+        <div class="featured-grid" aria-hidden="true"></div>
+
+        <div class="featured-top">
+          <span class="featured-index">01 / OFICIAL</span>
+
+          <span class="featured-badge">
+            <span class="badge-dot"></span>
+            Canal oficial da loja
+          </span>
+        </div>
+
+        <div class="featured-main">
+          <div class="featured-icon" aria-hidden="true">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.55"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect
+                x="3"
+                y="3"
+                width="18"
+                height="18"
+                rx="5"
+              />
+              <circle cx="12" cy="12" r="4.2" />
+              <circle
+                cx="17.4"
+                cy="6.7"
+                r="0.8"
+                fill="currentColor"
+                stroke="none"
+              />
+            </svg>
           </div>
 
-          <div class="channel-content">
-            <h3>{channel.name}</h3>
+          <div class="featured-content">
+            <span class="featured-type">
+              Rede social oficial
+            </span>
+
+            <h3>{featuredChannel.name}</h3>
 
             <p>
-              {
-                channelDescriptions[
-                  channel.type as keyof typeof channelDescriptions
-                ]
-              }
+              {channelDescriptions.instagram}
             </p>
 
-            <a
-              class="channel-action"
-              href={channel.url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {
-                channelActions[
-                  channel.type as keyof typeof channelActions
-                ]
-              }
+            <span class="featured-action">
+              <span>
+                {channelActions.instagram}
+              </span>
 
-              <span aria-hidden="true">↗</span>
-            </a>
+              <span
+                class="featured-arrow"
+                aria-hidden="true"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M5 12h13" />
+                  <path d="m13 6 6 6-6 6" />
+                </svg>
+              </span>
+            </span>
           </div>
-        </article>
-      ))}
+        </div>
+
+        <div class="featured-decoration" aria-hidden="true">
+          <span class="decoration-circle"></span>
+          <span class="decoration-ring"></span>
+
+          <span class="decoration-cross cross-one"></span>
+          <span class="decoration-cross cross-two"></span>
+
+          <span class="decoration-line line-one"></span>
+          <span class="decoration-line line-two"></span>
+        </div>
+
+        <span
+          class="featured-corner corner-top"
+          aria-hidden="true"
+        ></span>
+
+        <span
+          class="featured-corner corner-bottom"
+          aria-hidden="true"
+        ></span>
+      </a>
+    )}
+
+    {secondaryChannels.length > 0 && (
+      <div class="secondary-heading">
+        <span>OUTROS CANAIS OFICIAIS</span>
+
+        <span class="heading-line"></span>
+      </div>
+    )}
+
+    {secondaryChannels.length > 0 && (
+      <div class="channel-grid">
+        {secondaryChannels.map((channel, index) => (
+          <article
+            class:list={{
+              'channel-card': true,
+              'channel-card-whatsapp':
+                channel.type === 'whatsapp',
+            }}
+          >
+            <div class="card-top">
+              <span class="card-index">
+                {String(index + 2).padStart(2, '0')}
+              </span>
+
+              <span class="official-badge">
+                <span class="badge-dot"></span>
+                Oficial
+              </span>
+            </div>
+
+            <div class="channel-main">
+              <div
+                class="channel-icon"
+                aria-hidden="true"
+              >
+                {channel.type === 'whatsapp' ? (
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path
+                      d="M20.1 3.9A10.1 10.1 0 0 0 12.9 1C7.3.6 2.2 4.8 1.6 10.4c-.2 2.1.3 4.2 1.4 6L1.5 23l6.8-1.8a10.8 10.8 0 0 0 4.7 1.1h.1c5.7 0 10.4-4.6 10.4-10.3 0-3-1.2-5.9-3.4-8.1Z"
+                    />
+                    <path
+                      d="M8.5 7.5c.2-.4.5-.4.8-.4h.6c.2 0 .4.1.5.4l.9 2.1c.1.3.1.5-.1.7l-.7.9c.8 1.5 2 2.6 3.5 3.4l.8-.7c.2-.2.5-.2.8-.1l2 .9c.3.1.4.3.4.6v.6c0 .3-.1.6-.4.8-.5.4-1.2.6-1.8.5-1.8-.2-.3.7-.8.5-1.3-.3-.8-1.6-2.7-2.2-3.1-.2-.2-.5-.2-.8-.1l-.8.6c-.2.1-.4.1-.6 0-.8-.4-1.5-1-2-1.8-.1-.2-.1-.4 0-.6l.5-.7c.2-.2.2-.5.1-.7L9.1 7.7c-.1-.2-.3-.3-.6-.2Z"
+                    />
+                  </svg>
+                ) : (
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M5 12h14" />
+                    <path d="m13 6 6 6-6 6" />
+                  </svg>
+                )}
+              </div>
+
+              <div class="channel-content">
+                <span class="channel-type">
+                  {channel.type === 'whatsapp'
+                    ? 'Atendimento direto'
+                    : 'Canal oficial'}
+                </span>
+
+                <h3>{channel.name}</h3>
+
+                <p>
+                  {
+                    channelDescriptions[
+                      channel.type as keyof typeof channelDescriptions
+                    ]
+                  }
+                </p>
+
+                <a
+                  class="channel-action"
+                  href={channel.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span>
+                    {
+                      channelActions[
+                        channel.type as keyof typeof channelActions
+                      ]
+                    }
+                  </span>
+
+                  <span
+                    class="action-arrow"
+                    aria-hidden="true"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.8"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M5 12h13" />
+                      <path d="m13 6 6 6-6 6" />
+                    </svg>
+                  </span>
+                </a>
+              </div>
+            </div>
+
+            <div
+              class="card-decoration"
+              aria-hidden="true"
+            >
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </article>
+        ))}
+      </div>
+    )}
+
+    <div class="official-note">
+      <span class="note-icon" aria-hidden="true">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.6"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M12 3 4.5 6v5.5c0 4.5 3 7.8 7.5 9.5 4.5-1.7 7.5-5 7.5-9.5V6L12 3Z" />
+          <path d="m9 12 2 2 4-4" />
+        </svg>
+      </span>
+
+      <p>
+        Para sua segurança, utilize apenas os canais oficiais
+        apresentados pela Side Quest.
+      </p>
     </div>
   </div>
 </section>
 
 <style>
   .official-channels {
-    padding: 76px 0;
+    position: relative;
+
+    overflow: hidden;
+
+    padding: 86px 0 92px;
   }
 
-  .section-heading {
-    max-width: 680px;
-    margin-bottom: 28px;
+  .official-channels::before {
+    position: absolute;
+
+    top: 18%;
+    right: -180px;
+
+    width: 420px;
+    height: 420px;
+
+    border-radius: 50%;
+
+    background:
+      radial-gradient(
+        circle,
+        rgba(95, 200, 216, 0.06),
+        transparent 68%
+      );
+
+    pointer-events: none;
+
+    content: "";
   }
 
-  .eyebrow {
-    display: inline-block;
-    margin-bottom: 9px;
+  .section-intro {
+    display: flex;
+
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 40px;
+
+    margin-bottom: 34px;
+  }
+
+  .intro-copy {
+    max-width: 700px;
+  }
+
+  .section-label {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    margin-bottom: 12px;
+
     color: var(--color-primary-light);
-    font-size: 0.75rem;
+
+    font-size: 0.66rem;
     font-weight: 900;
-    letter-spacing: 0.16em;
+
+    letter-spacing: 0.17em;
+  }
+
+  .label-mark {
+    width: 7px;
+    height: 7px;
+
+    border: 1px solid var(--color-cyan);
+    border-radius: 2px;
+
+    background: rgba(95, 200, 216, 0.12);
+
+    box-shadow:
+      0 0 9px rgba(95, 200, 216, 0.22);
+
+    transform: rotate(45deg);
   }
 
   h2 {
+    max-width: 650px;
+
     margin: 0;
-    font-size: clamp(1.8rem, 5vw, 2.5rem);
+
+    color: var(--color-text-strong);
+
+    font-size: clamp(2rem, 5vw, 3rem);
+
+    line-height: 1.04;
+
+    letter-spacing: -0.035em;
+  }
+
+  h2 span {
+    color: var(--color-primary-light);
+  }
+
+  .intro-copy > p {
+    max-width: 650px;
+
+    margin: 15px 0 0;
+
+    color: var(--color-text-muted);
+
+    font-size: 0.93rem;
+
+    line-height: 1.65;
+  }
+
+  .intro-decoration {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding-bottom: 8px;
+
+    opacity: 0.65;
+  }
+
+  .deco-line {
+    width: 42px;
+    height: 1px;
+
+    background:
+      linear-gradient(
+        90deg,
+        transparent,
+        var(--color-primary)
+      );
+  }
+
+  .deco-line:last-child {
+    background:
+      linear-gradient(
+        90deg,
+        var(--color-primary),
+        transparent
+      );
+  }
+
+  .deco-diamond {
+    width: 9px;
+    height: 9px;
+
+    border: 1px solid var(--color-cyan);
+
+    transform: rotate(45deg);
+  }
+
+
+  /* =====================================================
+     INSTAGRAM EM DESTAQUE
+     ===================================================== */
+
+  .featured-channel {
+    position: relative;
+
+    display: block;
+
+    min-height: 270px;
+
+    overflow: hidden;
+
+    padding: 25px 27px;
+
+    border: 1px solid
+      rgba(176, 106, 200, 0.25);
+
+    border-radius: var(--radius-xl);
+
+    background:
+      linear-gradient(
+        125deg,
+        rgba(41, 46, 67, 0.98),
+        rgba(31, 30, 52, 0.98) 48%,
+        rgba(27, 27, 45, 0.99)
+      );
+
+    color: var(--color-text);
+
+    box-shadow:
+      0 15px 42px rgba(0, 0, 0, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.045);
+
+    transition:
+      transform 450ms cubic-bezier(0.2, 0.7, 0.2, 1),
+      border-color 350ms ease,
+      box-shadow 450ms ease;
+  }
+
+  .featured-channel:hover {
+    transform: translateY(-5px);
+
+    border-color:
+      rgba(176, 106, 200, 0.4);
+
+    box-shadow:
+      0 23px 50px rgba(0, 0, 0, 0.25),
+      0 0 38px rgba(176, 106, 200, 0.07);
+  }
+
+  .featured-background {
+    position: absolute;
+
+    top: -210px;
+    right: -120px;
+
+    width: 520px;
+    height: 520px;
+
+    border-radius: 50%;
+
+    background:
+      radial-gradient(
+        circle,
+        rgba(176, 106, 200, 0.2),
+        rgba(95, 200, 216, 0.045) 42%,
+        transparent 69%
+      );
+
+    opacity: 0.82;
+
+    transition:
+      transform 800ms cubic-bezier(0.2, 0.7, 0.2, 1),
+      opacity 500ms ease;
+
+    pointer-events: none;
+  }
+
+  .featured-channel:hover
+  .featured-background {
+    opacity: 1;
+
+    transform: scale(1.12);
+  }
+
+  .featured-grid {
+    position: absolute;
+
+    inset: 0;
+
+    background-image:
+      linear-gradient(
+        rgba(255, 255, 255, 0.018) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.018) 1px,
+        transparent 1px
+      );
+
+    background-size: 34px 34px;
+
+    mask-image:
+      linear-gradient(
+        90deg,
+        transparent,
+        black 35%,
+        black 72%,
+        transparent
+      );
+
+    opacity: 0.55;
+
+    pointer-events: none;
+  }
+
+  .featured-top {
+    position: relative;
+
+    z-index: 3;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-bottom: 36px;
+  }
+
+  .featured-index {
+    color: var(--color-text-soft);
+
+    font-size: 0.58rem;
+    font-weight: 900;
+
+    letter-spacing: 0.16em;
+  }
+
+  .featured-badge {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 6px 10px;
+
+    border: 1px solid
+      rgba(117, 165, 138, 0.2);
+
+    border-radius: var(--radius-pill);
+
+    background:
+      rgba(117, 165, 138, 0.07);
+
+    color: var(--color-success);
+
+    font-size: 0.6rem;
+    font-weight: 850;
+
+    letter-spacing: 0.045em;
+  }
+
+  .featured-badge .badge-dot {
+    width: 5px;
+    height: 5px;
+
+    border-radius: 50%;
+
+    background: currentColor;
+
+    box-shadow:
+      0 0 8px rgba(117, 165, 138, 0.5);
+  }
+
+  .featured-main {
+    position: relative;
+
+    z-index: 3;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 23px;
+
+    max-width: 650px;
+  }
+
+  .featured-icon {
+    display: grid;
+
+    flex: 0 0 88px;
+
+    width: 88px;
+    height: 88px;
+
+    place-items: center;
+
+    border: 1px solid
+      rgba(176, 106, 200, 0.35);
+
+    border-radius: 25px;
+
+    background:
+      linear-gradient(
+        145deg,
+        rgba(176, 106, 200, 0.18),
+        rgba(95, 200, 216, 0.08)
+      );
+
+    color: #c88cdb;
+
+    box-shadow:
+      0 10px 28px rgba(0, 0, 0, 0.18),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+    transition:
+      transform 500ms cubic-bezier(0.2, 0.7, 0.2, 1),
+      border-color 350ms ease,
+      box-shadow 350ms ease;
+  }
+
+  .featured-icon svg {
+    width: 42px;
+    height: 42px;
+  }
+
+  .featured-channel:hover
+  .featured-icon {
+    transform:
+      translateY(-3px)
+      rotate(-4deg);
+
+    border-color:
+      rgba(176, 106, 200, 0.55);
+
+    box-shadow:
+      0 14px 32px rgba(0, 0, 0, 0.24),
+      0 0 25px rgba(176, 106, 200, 0.08);
+  }
+
+  .featured-content {
+    min-width: 0;
+  }
+
+  .featured-type {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: var(--color-text-soft);
+
+    font-size: 0.59rem;
+    font-weight: 850;
+
+    letter-spacing: 0.12em;
+
+    text-transform: uppercase;
+  }
+
+  .featured-content h3 {
+    margin: 0;
+
+    color: var(--color-text-strong);
+
+    font-size: clamp(1.45rem, 3vw, 2rem);
+
+    line-height: 1.1;
+
     letter-spacing: -0.025em;
   }
 
-  .section-heading p {
-    margin: 12px 0 0;
+  .featured-content p {
+    max-width: 510px;
+
+    margin: 9px 0 17px;
+
     color: var(--color-text-muted);
+
+    font-size: 0.82rem;
+
+    line-height: 1.55;
+  }
+
+  .featured-action {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    color: #c88cdb;
+
+    font-size: 0.76rem;
+    font-weight: 850;
+
+    transition:
+      color 250ms ease,
+      gap 300ms ease;
+  }
+
+  .featured-channel:hover
+  .featured-action {
+    gap: 12px;
+
+    color: #d9a4e7;
+  }
+
+  .featured-arrow {
+    display: grid;
+
+    width: 28px;
+    height: 28px;
+
+    place-items: center;
+
+    border: 1px solid currentColor;
+
+    border-radius: 50%;
+
+    opacity: 0.8;
+  }
+
+  .featured-arrow svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  .featured-decoration {
+    position: absolute;
+
+    top: 0;
+    right: 0;
+    bottom: 0;
+
+    width: 42%;
+
+    pointer-events: none;
+  }
+
+  .decoration-circle {
+    position: absolute;
+
+    top: 50%;
+    right: 12%;
+
+    width: 175px;
+    height: 175px;
+
+    border: 1px solid
+      rgba(176, 106, 200, 0.14);
+
+    border-radius: 50%;
+
+    transform:
+      translateY(-50%)
+      rotate(20deg);
+  }
+
+  .decoration-ring {
+    position: absolute;
+
+    top: 50%;
+    right: 15%;
+
+    width: 125px;
+    height: 125px;
+
+    border: 1px dashed
+      rgba(95, 200, 216, 0.18);
+
+    border-radius: 50%;
+
+    transform:
+      translateY(-50%)
+      rotate(-20deg);
+  }
+
+  .decoration-cross {
+    position: absolute;
+
+    width: 12px;
+    height: 12px;
+
+    opacity: 0.55;
+  }
+
+  .decoration-cross::before,
+  .decoration-cross::after {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    width: 12px;
+    height: 1px;
+
+    background: var(--color-cyan);
+
+    content: "";
+  }
+
+  .decoration-cross::after {
+    transform: rotate(90deg);
+  }
+
+  .cross-one {
+    top: 28%;
+    right: 28%;
+  }
+
+  .cross-two {
+    right: 8%;
+    bottom: 22%;
+
+    transform: scale(0.65);
+  }
+
+  .decoration-line {
+    position: absolute;
+
+    width: 85px;
+    height: 1px;
+
+    background:
+      linear-gradient(
+        90deg,
+        transparent,
+        rgba(176, 106, 200, 0.3)
+      );
+
+    transform: rotate(-35deg);
+  }
+
+  .line-one {
+    top: 24%;
+    right: -4%;
+  }
+
+  .line-two {
+    right: 7%;
+    bottom: 26%;
+
+    transform:
+      rotate(35deg);
+
+    background:
+      linear-gradient(
+        90deg,
+        transparent,
+        rgba(95, 200, 216, 0.24)
+      );
+  }
+
+  .featured-corner {
+    position: absolute;
+
+    z-index: 4;
+
+    width: 25px;
+    height: 25px;
+
+    pointer-events: none;
+  }
+
+  .corner-top {
+    top: 9px;
+    left: 9px;
+
+    border-top: 1px solid
+      rgba(95, 200, 216, 0.3);
+
+    border-left: 1px solid
+      rgba(95, 200, 216, 0.3);
+
+    border-radius: 9px 0 0 0;
+  }
+
+  .corner-bottom {
+    right: 9px;
+    bottom: 9px;
+
+    border-right: 1px solid
+      rgba(176, 106, 200, 0.3);
+
+    border-bottom: 1px solid
+      rgba(176, 106, 200, 0.3);
+
+    border-radius: 0 0 9px 0;
+  }
+
+
+  /* =====================================================
+     OUTROS CANAIS
+     ===================================================== */
+
+  .secondary-heading {
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    margin: 29px 0 14px;
+
+    color: var(--color-text-soft);
+
+    font-size: 0.58rem;
+    font-weight: 900;
+
+    letter-spacing: 0.15em;
+  }
+
+  .heading-line {
+    flex: 1;
+
+    height: 1px;
+
+    background:
+      linear-gradient(
+        90deg,
+        rgba(220, 224, 240, 0.1),
+        transparent
+      );
   }
 
   .channel-grid {
     display: grid;
-    gap: 14px;
+
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 16px;
   }
 
   .channel-card {
-    display: flex;
-    gap: 18px;
+    position: relative;
+
+    min-width: 0;
+
+    overflow: hidden;
+
     padding: 22px;
+
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
-    background: var(--color-surface);
+
+    background:
+      linear-gradient(
+        145deg,
+        rgba(41, 46, 67, 0.94),
+        rgba(24, 28, 45, 0.98)
+      );
+
+    box-shadow:
+      0 9px 26px rgba(0, 0, 0, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.035);
+
     transition:
-      transform 0.2s ease,
-      border-color 0.2s ease;
+      transform 400ms cubic-bezier(0.2, 0.7, 0.2, 1),
+      border-color 300ms ease,
+      box-shadow 400ms ease;
+  }
+
+  .channel-card::before {
+    position: absolute;
+
+    top: -90px;
+    right: -90px;
+
+    width: 230px;
+    height: 230px;
+
+    border-radius: 50%;
+
+    background:
+      radial-gradient(
+        circle,
+        rgba(117, 165, 138, 0.11),
+        transparent 68%
+      );
+
+    opacity: 0;
+
+    transform: scale(0.72);
+
+    transition:
+      opacity 500ms ease,
+      transform 650ms cubic-bezier(0.2, 0.7, 0.2, 1);
+
+    content: "";
+
+    pointer-events: none;
   }
 
   .channel-card:hover {
-    transform: translateY(-2px);
-    border-color: rgba(145, 134, 189, 0.35);
+    transform: translateY(-5px);
+
+    border-color:
+      rgba(95, 200, 216, 0.24);
+
+    box-shadow:
+      0 18px 38px rgba(0, 0, 0, 0.22),
+      0 0 26px rgba(95, 200, 216, 0.05);
+  }
+
+  .channel-card:hover::before {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+
+  .card-top {
+    position: relative;
+
+    z-index: 2;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 24px;
+  }
+
+  .card-index {
+    color: var(--color-text-soft);
+
+    font-size: 0.56rem;
+    font-weight: 900;
+
+    letter-spacing: 0.16em;
+  }
+
+  .official-badge {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    padding: 5px 9px;
+
+    border: 1px solid
+      rgba(117, 165, 138, 0.18);
+
+    border-radius: var(--radius-pill);
+
+    background:
+      rgba(117, 165, 138, 0.07);
+
+    color: var(--color-success);
+
+    font-size: 0.58rem;
+    font-weight: 850;
+
+    letter-spacing: 0.04em;
+  }
+
+  .badge-dot {
+    width: 5px;
+    height: 5px;
+
+    border-radius: 50%;
+
+    background: currentColor;
+
+    box-shadow:
+      0 0 8px rgba(117, 165, 138, 0.45);
+  }
+
+  .channel-main {
+    position: relative;
+
+    z-index: 2;
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 17px;
   }
 
   .channel-icon {
     display: grid;
-    flex: 0 0 48px;
-    width: 48px;
-    height: 48px;
+
+    flex: 0 0 58px;
+
+    width: 58px;
+    height: 58px;
+
     place-items: center;
-    border-radius: 14px;
-    background: var(--color-surface-soft);
-    color: var(--color-primary-light);
-    font-size: 1.5rem;
-    font-weight: 700;
+
+    border: 1px solid
+      rgba(117, 165, 138, 0.2);
+
+    border-radius: 17px;
+
+    background:
+      linear-gradient(
+        145deg,
+        rgba(117, 165, 138, 0.13),
+        rgba(95, 200, 216, 0.05)
+      );
+
+    color: var(--color-success);
+
+    transition:
+      transform 400ms cubic-bezier(0.2, 0.7, 0.2, 1),
+      border-color 300ms ease;
+  }
+
+  .channel-icon svg {
+    width: 27px;
+    height: 27px;
+  }
+
+  .channel-card:hover .channel-icon {
+    transform:
+      translateY(-2px)
+      rotate(-3deg);
+
+    border-color:
+      rgba(117, 165, 138, 0.34);
   }
 
   .channel-content {
     min-width: 0;
   }
 
-  h3 {
+  .channel-type {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: var(--color-text-soft);
+
+    font-size: 0.56rem;
+    font-weight: 800;
+
+    letter-spacing: 0.1em;
+
+    text-transform: uppercase;
+  }
+
+  .channel-content h3 {
     margin: 0;
-    font-size: 1.05rem;
+
+    color: var(--color-text-strong);
+
+    font-size: 1.08rem;
+
+    letter-spacing: -0.012em;
   }
 
   .channel-content p {
-    margin: 6px 0 14px;
+    max-width: 470px;
+
+    margin: 7px 0 17px;
+
     color: var(--color-text-muted);
-    font-size: 0.88rem;
+
+    font-size: 0.8rem;
+
+    line-height: 1.55;
   }
 
   .channel-action {
     display: inline-flex;
+
     align-items: center;
-    gap: 7px;
-    color: var(--color-primary-light);
-    font-size: 0.85rem;
-    font-weight: 800;
+
+    gap: 9px;
+
+    color: var(--color-success);
+
+    font-size: 0.75rem;
+    font-weight: 850;
+
+    transition:
+      color 250ms ease,
+      gap 300ms ease;
   }
 
-  @media (min-width: 700px) {
+  .channel-action:hover {
+    gap: 12px;
+
+    color: #a3c8ae;
+  }
+
+  .action-arrow {
+    display: grid;
+
+    width: 25px;
+    height: 25px;
+
+    place-items: center;
+
+    border: 1px solid currentColor;
+
+    border-radius: 50%;
+
+    opacity: 0.72;
+  }
+
+  .action-arrow svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .card-decoration {
+    position: absolute;
+
+    right: 21px;
+    bottom: 20px;
+
+    z-index: 1;
+
+    display: flex;
+
+    align-items: flex-end;
+
+    gap: 5px;
+
+    opacity: 0.35;
+  }
+
+  .card-decoration span {
+    display: block;
+
+    width: 3px;
+    height: 12px;
+
+    border-radius: 2px;
+
+    background: var(--color-primary);
+  }
+
+  .card-decoration span:nth-child(2) {
+    height: 21px;
+
+    background: var(--color-cyan);
+  }
+
+  .card-decoration span:nth-child(3) {
+    height: 8px;
+
+    background: var(--color-magenta);
+  }
+
+
+  /* =====================================================
+     AVISO
+     ===================================================== */
+
+  .official-note {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 17px;
+
+    padding: 12px 14px;
+
+    border: 1px solid
+      rgba(220, 224, 240, 0.07);
+
+    border-radius: var(--radius-md);
+
+    background:
+      rgba(16, 19, 34, 0.42);
+  }
+
+  .note-icon {
+    display: grid;
+
+    flex: 0 0 28px;
+
+    width: 28px;
+    height: 28px;
+
+    place-items: center;
+
+    color: var(--color-cyan);
+  }
+
+  .note-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .official-note p {
+    margin: 0;
+
+    color: var(--color-text-soft);
+
+    font-size: 0.68rem;
+
+    line-height: 1.45;
+  }
+
+
+  /* =====================================================
+     MOBILE
+     ===================================================== */
+
+  @media (max-width: 699px) {
+    .official-channels {
+      padding: 68px 0 76px;
+    }
+
+    .section-intro {
+      display: block;
+
+      margin-bottom: 26px;
+    }
+
+    .intro-decoration {
+      display: none;
+    }
+
+    h2 {
+      font-size:
+        clamp(1.85rem, 9vw, 2.4rem);
+    }
+
+    .intro-copy > p {
+      margin-top: 12px;
+
+      font-size: 0.82rem;
+
+      line-height: 1.6;
+    }
+
+    .featured-channel {
+      min-height: 0;
+
+      padding: 20px;
+
+      border-radius: var(--radius-lg);
+    }
+
+    .featured-top {
+      margin-bottom: 28px;
+    }
+
+    .featured-main {
+      gap: 15px;
+    }
+
+    .featured-icon {
+      flex-basis: 64px;
+
+      width: 64px;
+      height: 64px;
+
+      border-radius: 18px;
+    }
+
+    .featured-icon svg {
+      width: 31px;
+      height: 31px;
+    }
+
+    .featured-content h3 {
+      font-size: 1.35rem;
+    }
+
+    .featured-content p {
+      margin-top: 7px;
+
+      font-size: 0.74rem;
+    }
+
+    .featured-decoration {
+      width: 48%;
+
+      opacity: 0.7;
+    }
+
+    .decoration-circle {
+      width: 125px;
+      height: 125px;
+    }
+
+    .decoration-ring {
+      width: 88px;
+      height: 88px;
+    }
+
+    .secondary-heading {
+      margin-top: 25px;
+    }
+
     .channel-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: 1fr;
+
+      gap: 12px;
+    }
+
+    .channel-card {
+      padding: 18px;
+
+      border-radius: var(--radius-md);
+    }
+
+    .card-top {
+      margin-bottom: 20px;
+    }
+
+    .channel-main {
+      gap: 13px;
+    }
+
+    .channel-icon {
+      flex-basis: 50px;
+
+      width: 50px;
+      height: 50px;
+
+      border-radius: 14px;
+    }
+
+    .channel-icon svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .channel-content p {
+      margin-bottom: 14px;
+
+      font-size: 0.74rem;
+    }
+
+    .official-note {
+      align-items: flex-start;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .featured-channel {
+      padding: 17px;
+    }
+
+    .featured-top {
+      margin-bottom: 22px;
+    }
+
+    .featured-index {
+      font-size: 0.52rem;
+    }
+
+    .featured-badge {
+      padding: 5px 8px;
+
+      font-size: 0.53rem;
+    }
+
+    .featured-main {
+      align-items: flex-start;
+
+      gap: 12px;
+    }
+
+    .featured-icon {
+      flex-basis: 54px;
+
+      width: 54px;
+      height: 54px;
+
+      border-radius: 15px;
+    }
+
+    .featured-icon svg {
+      width: 26px;
+      height: 26px;
+    }
+
+    .featured-content h3 {
+      font-size: 1.12rem;
+    }
+
+    .featured-content p {
+      font-size: 0.68rem;
+      line-height: 1.45;
+    }
+
+    .featured-action {
+      font-size: 0.65rem;
+    }
+
+    .featured-arrow {
+      width: 24px;
+      height: 24px;
+    }
+
+    .featured-decoration {
+      opacity: 0.45;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .featured-channel,
+    .featured-background,
+    .featured-icon,
+    .featured-action,
+    .channel-card,
+    .channel-icon,
+    .channel-action {
+      transition: none;
     }
   }
 </style>

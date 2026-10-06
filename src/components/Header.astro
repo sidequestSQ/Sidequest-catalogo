@@ -1,19 +1,88 @@
+---
+import { siteConfig } from '../data/site';
+
+const currentPath = Astro.url.pathname;
+
+const isHome = currentPath === '/';
+const isCatalog = currentPath.startsWith(siteConfig.catalogPath);
+---
+
 <header class="site-header">
+  <div class="header-energy" aria-hidden="true"></div>
+
   <div class="container header-inner">
-    <a href="/" class="brand" aria-label="Side Quest — página inicial">
-      <span class="brand-mark" aria-hidden="true">
-        SQ
+    <a
+      href="/"
+      class="brand"
+      aria-label={`${siteConfig.name} — página inicial`}
+    >
+      <span class="brand-mark">
+        <span class="brand-mark-ring" aria-hidden="true"></span>
+
+        <img
+          src={siteConfig.logo}
+          alt={siteConfig.name}
+        />
+
+        <span class="brand-mark-node" aria-hidden="true"></span>
       </span>
 
       <span class="brand-text">
-        <strong>Side Quest</strong>
+        <strong>{siteConfig.shortName}</strong>
         <small>CATÁLOGO GEEK</small>
       </span>
     </a>
 
-    <nav class="main-nav" aria-label="Navegação principal">
-      <a href="/">Início</a>
-      <a href="/catalogo/">Catálogo</a>
+    <nav
+      class="main-nav"
+      aria-label="Navegação principal"
+    >
+      <a
+        href="/"
+        class:list={['nav-link', { active: isHome }]}
+        aria-current={isHome ? 'page' : undefined}
+      >
+        <span class="nav-icon" aria-hidden="true">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M3.5 10.5 12 3l8.5 7.5" />
+            <path d="M5.5 9.5V20h13V9.5" />
+            <path d="M9.5 20v-6h5v6" />
+          </svg>
+        </span>
+
+        <span>Início</span>
+      </a>
+
+      <a
+        href={siteConfig.catalogPath}
+        class:list={['nav-link', { active: isCatalog }]}
+        aria-current={isCatalog ? 'page' : undefined}
+      >
+        <span class="nav-icon" aria-hidden="true">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <rect x="4" y="4" width="6" height="6" rx="1" />
+            <rect x="14" y="4" width="6" height="6" rx="1" />
+            <rect x="4" y="14" width="6" height="6" rx="1" />
+            <rect x="14" y="14" width="6" height="6" rx="1" />
+          </svg>
+        </span>
+
+        <span>Catálogo</span>
+      </a>
     </nav>
   </div>
 </header>
@@ -23,89 +92,472 @@
     position: sticky;
     top: 0;
     z-index: 100;
+
     border-bottom: 1px solid var(--color-border);
-    background: rgba(8, 11, 24, 0.88);
-    backdrop-filter: blur(18px);
+
+    background:
+      linear-gradient(
+        90deg,
+        rgba(118, 103, 168, 0.09),
+        transparent 32%,
+        rgba(95, 200, 216, 0.035) 72%,
+        transparent
+      ),
+      rgba(16, 19, 34, 0.88);
+
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+
+    box-shadow:
+      0 8px 28px rgba(0, 0, 0, 0.14),
+      inset 0 1px 0 rgba(255, 255, 255, 0.025);
+  }
+
+  /* Linha energética discreta na base do Header */
+  .header-energy {
+    position: absolute;
+    right: 0;
+    bottom: -1px;
+    left: 0;
+
+    height: 1px;
+
+    background:
+      linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(118, 103, 168, 0.2) 20%,
+        rgba(95, 200, 216, 0.55) 50%,
+        rgba(176, 106, 200, 0.2) 80%,
+        transparent 100%
+      );
+
+    opacity: 0.7;
+    pointer-events: none;
   }
 
   .header-inner {
     display: flex;
-    min-height: 72px;
+
+    min-height: 74px;
+
     align-items: center;
     justify-content: space-between;
+
     gap: 24px;
   }
+
+  /* =====================================================
+     MARCA
+     ===================================================== */
 
   .brand {
     display: inline-flex;
     align-items: center;
+
     gap: 11px;
+
+    min-width: 0;
+
+    transition:
+      transform var(--transition-base),
+      opacity var(--transition-base);
+  }
+
+  .brand:hover {
+    transform: translateY(-1px);
+  }
+
+  .brand:focus-visible {
+    border-radius: var(--radius-md);
   }
 
   .brand-mark {
+    position: relative;
+
     display: grid;
-    width: 40px;
-    height: 40px;
+
+    width: 44px;
+    height: 44px;
+
+    flex: 0 0 44px;
+
     place-items: center;
-    border-radius: 11px;
-    background: linear-gradient(
-      135deg,
-      var(--color-primary),
-      var(--color-accent)
-    );
-    color: var(--color-bg);
-    font-size: 0.8rem;
-    font-weight: 950;
-    box-shadow: 0 6px 22px rgba(255, 122, 24, 0.2);
+
+    overflow: hidden;
+
+    border: 1px solid rgba(145, 134, 189, 0.25);
+    border-radius: 13px;
+
+    background:
+      radial-gradient(
+        circle at 30% 20%,
+        rgba(176, 106, 200, 0.16),
+        transparent 45%
+      ),
+      radial-gradient(
+        circle at 80% 80%,
+        rgba(95, 200, 216, 0.08),
+        transparent 40%
+      ),
+      rgba(37, 42, 61, 0.78);
+
+    box-shadow:
+      0 6px 20px rgba(118, 103, 168, 0.13),
+      inset 0 1px 0 rgba(255, 255, 255, 0.035);
+
+    transition:
+      border-color var(--transition-base),
+      box-shadow var(--transition-base),
+      transform var(--transition-base);
+  }
+
+  /* Moldura interna */
+  .brand-mark-ring {
+    position: absolute;
+
+    width: 29px;
+    height: 29px;
+
+    border: 1px solid rgba(95, 200, 216, 0.12);
+    border-radius: 9px;
+
+    transform: rotate(45deg);
+
+    pointer-events: none;
+  }
+
+  .brand-mark-ring::before,
+  .brand-mark-ring::after {
+    position: absolute;
+
+    width: 4px;
+    height: 4px;
+
+    border-radius: 1px;
+
+    background: var(--color-cyan);
+
+    box-shadow:
+      0 0 9px rgba(95, 200, 216, 0.45);
+
+    content: "";
+  }
+
+  .brand-mark-ring::before {
+    top: -2px;
+    left: 50%;
+
+    transform: translateX(-50%);
+  }
+
+  .brand-mark-ring::after {
+    right: -2px;
+    bottom: 50%;
+
+    transform: translateY(50%);
+  }
+
+  .brand-mark img {
+    position: relative;
+    z-index: 2;
+
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+  }
+
+  /* Pequeno ponto de energia */
+  .brand-mark-node {
+    position: absolute;
+
+    right: 5px;
+    bottom: 5px;
+
+    z-index: 3;
+
+    width: 5px;
+    height: 5px;
+
+    border-radius: 50%;
+
+    background: var(--color-cyan);
+
+    box-shadow:
+      0 0 0 2px rgba(95, 200, 216, 0.08),
+      0 0 11px rgba(95, 200, 216, 0.55);
+
+    animation:
+      sq-pulse-glow 3.2s ease-in-out infinite;
+  }
+
+  .brand:hover .brand-mark {
+    border-color: rgba(95, 200, 216, 0.34);
+
+    box-shadow:
+      0 8px 24px rgba(118, 103, 168, 0.19),
+      0 0 20px rgba(95, 200, 216, 0.08);
+
+    transform: rotate(-2deg);
+  }
+
+  .brand:hover .brand-mark-ring {
+    border-color: rgba(95, 200, 216, 0.2);
+
+    animation:
+      sq-orbit 7s linear infinite;
   }
 
   .brand-text {
     display: flex;
     flex-direction: column;
+
+    min-width: 0;
+
     line-height: 1.1;
   }
 
   .brand-text strong {
-    font-size: 1rem;
+    color: var(--color-text-strong);
+
+    font-size: 1.02rem;
     font-weight: 850;
+
+    letter-spacing: -0.01em;
   }
 
   .brand-text small {
     margin-top: 4px;
+
     color: var(--color-text-muted);
-    font-size: 0.58rem;
+
+    font-size: 0.57rem;
     font-weight: 800;
-    letter-spacing: 0.14em;
+
+    letter-spacing: 0.15em;
   }
+
+  /* =====================================================
+     NAVEGAÇÃO
+     ===================================================== */
 
   .main-nav {
     display: flex;
     align-items: center;
-    gap: 8px;
+
+    gap: 5px;
+
+    padding: 4px;
+
+    border: 1px solid rgba(220, 224, 240, 0.055);
+    border-radius: 14px;
+
+    background:
+      rgba(28, 32, 50, 0.46);
+
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.018);
   }
 
-  .main-nav a {
+  .nav-link {
+    position: relative;
+
     display: inline-flex;
-    min-height: 40px;
+
+    min-height: 42px;
+
     align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
     padding: 0 13px;
+
+    border: 1px solid transparent;
     border-radius: 10px;
+
     color: var(--color-text-muted);
-    font-size: 0.9rem;
-    font-weight: 700;
-    transition:
-      color 0.2s ease,
-      background 0.2s ease;
+
+    font-size: 0.86rem;
+    font-weight: 750;
+
+    overflow: hidden;
   }
 
-  .main-nav a:hover {
-    background: var(--color-surface);
+  .nav-link::before {
+    position: absolute;
+    inset: 0;
+
+    background:
+      linear-gradient(
+        110deg,
+        transparent 25%,
+        rgba(255, 255, 255, 0.045) 50%,
+        transparent 75%
+      );
+
+    content: "";
+
+    transform: translateX(-120%);
+
+    transition:
+      transform 600ms ease;
+
+    pointer-events: none;
+  }
+
+  .nav-link:hover::before,
+  .nav-link:focus-visible::before {
+    transform: translateX(120%);
+  }
+
+  .nav-link:hover {
+    border-color: rgba(145, 134, 189, 0.12);
+
+    background:
+      rgba(37, 42, 61, 0.58);
+
     color: var(--color-text);
   }
+
+  .nav-link.active {
+    border-color:
+      rgba(118, 103, 168, 0.22);
+
+    background:
+      linear-gradient(
+        135deg,
+        rgba(118, 103, 168, 0.17),
+        rgba(95, 200, 216, 0.055)
+      );
+
+    color: var(--color-text-strong);
+
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.025),
+      0 3px 14px rgba(0, 0, 0, 0.08);
+  }
+
+  .nav-link::after {
+    position: absolute;
+
+    right: 13px;
+    bottom: 4px;
+    left: 13px;
+
+    height: 2px;
+
+    border-radius: var(--radius-pill);
+
+    background:
+      linear-gradient(
+        90deg,
+        var(--color-primary),
+        var(--color-cyan)
+      );
+
+    content: "";
+
+    transform: scaleX(0);
+    transform-origin: center;
+
+    transition:
+      transform var(--transition-base);
+  }
+
+  .nav-link:hover::after,
+  .nav-link:focus-visible::after,
+  .nav-link.active::after {
+    transform: scaleX(1);
+  }
+
+  .nav-link.active::after {
+    box-shadow:
+      0 0 9px rgba(95, 200, 216, 0.28);
+  }
+
+  /* =====================================================
+     ÍCONES
+     ===================================================== */
+
+  .nav-icon {
+    display: inline-flex;
+
+    width: 18px;
+    height: 18px;
+
+    flex: 0 0 18px;
+
+    align-items: center;
+    justify-content: center;
+
+    color: var(--color-primary-light);
+
+    transition:
+      color var(--transition-base),
+      transform var(--transition-base),
+      filter var(--transition-base);
+  }
+
+  .nav-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .nav-link:hover .nav-icon,
+  .nav-link.active .nav-icon {
+    color: var(--color-cyan);
+
+    filter:
+      drop-shadow(
+        0 0 5px rgba(95, 200, 216, 0.22)
+      );
+  }
+
+  .nav-link:hover .nav-icon {
+    transform:
+      translateY(-1px)
+      rotate(-2deg);
+  }
+
+  .nav-link.active .nav-icon {
+    transform: translateY(-1px);
+  }
+
+  /* =====================================================
+     MOBILE
+     ===================================================== */
 
   @media (max-width: 640px) {
     .header-inner {
       min-height: 64px;
+
+      gap: 12px;
+    }
+
+    .brand {
+      gap: 9px;
+    }
+
+    .brand-mark {
+      width: 39px;
+      height: 39px;
+
+      flex-basis: 39px;
+
+      border-radius: 11px;
+    }
+
+    .brand-mark-ring {
+      width: 26px;
+      height: 26px;
+    }
+
+    .brand-text strong {
+      font-size: 0.94rem;
     }
 
     .brand-text small {
@@ -114,12 +566,89 @@
 
     .main-nav {
       gap: 2px;
+
+      padding: 3px;
+
+      border-radius: 12px;
     }
 
-    .main-nav a {
+    .nav-link {
       min-height: 38px;
-      padding: 0 10px;
-      font-size: 0.85rem;
+
+      gap: 6px;
+
+      padding: 0 9px;
+
+      font-size: 0.81rem;
+    }
+
+    .nav-icon {
+      width: 16px;
+      height: 16px;
+
+      flex-basis: 16px;
+    }
+
+    .nav-link::after {
+      right: 9px;
+      bottom: 3px;
+      left: 9px;
+    }
+  }
+
+  @media (max-width: 390px) {
+    .brand-text {
+      display: none;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+
+      flex-basis: 38px;
+    }
+
+    .nav-link {
+      padding: 0 8px;
+    }
+
+    .nav-link span:last-child {
+      display: none;
+    }
+
+    .nav-icon {
+      width: 18px;
+      height: 18px;
+
+      flex-basis: 18px;
+    }
+
+    .nav-link::after {
+      right: 8px;
+      left: 8px;
+    }
+  }
+
+  /* =====================================================
+     REDUÇÃO DE MOVIMENTO
+     ===================================================== */
+
+  @media (prefers-reduced-motion: reduce) {
+    .brand,
+    .brand-mark,
+    .brand-mark-ring,
+    .brand-mark-node,
+    .nav-link::before,
+    .nav-link::after,
+    .nav-icon {
+      animation: none !important;
+      transition: none !important;
+    }
+
+    .brand:hover,
+    .brand:hover .brand-mark,
+    .nav-link:hover .nav-icon {
+      transform: none;
     }
   }
 </style>

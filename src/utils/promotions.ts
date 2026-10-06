@@ -4,6 +4,8 @@ import type {
   Promotion,
 } from '../types/catalog';
 
+import { promotions } from '../data/promotions';
+
 export interface PriceResult {
   originalPriceCents: number;
   finalPriceCents: number;
@@ -97,27 +99,55 @@ export function getActivePromotions(
   product: Product,
   now: Date = new Date()
 ): Promotion[] {
-  return (product.promotions ?? []).filter(
-    (promotion) =>
-      isPromotionActive(promotion, now)
-  );
+  return promotions.filter((promotion) => {
+    if (!isPromotionActive(promotion, now)) {
+      return false;
+    }
+
+    if (
+      promotion.productIds &&
+      promotion.productIds.length > 0 &&
+      !promotion.productIds.includes(product.id)
+    ) {
+      return false;
+    }
+
+    return true;
+  });
 }
 
 export function getPromotionById(
   product: Product,
   promotionId: string
 ): Promotion | undefined {
-  return (product.promotions ?? []).find(
-    (promotion) =>
-      promotion.id === promotionId
+  const promotion = promotions.find(
+    (item) =>
+      item.id === promotionId
   );
+
+  if (!promotion) {
+    return undefined;
+  }
+
+  if (
+    promotion.productIds &&
+    promotion.productIds.length > 0 &&
+    !promotion.productIds.includes(product.id)
+  ) {
+    return undefined;
+  }
+
+  return promotion;
 }
 
 export function getActivePromotion(
   product: Product,
   now: Date = new Date()
 ): Promotion | undefined {
-  return getActivePromotions(product, now)[0];
+  return getActivePromotions(
+    product,
+    now
+  )[0];
 }
 
 export function getChannelPromotion(
@@ -137,7 +167,10 @@ export function getChannelPromotion(
 
   if (
     !promotion ||
-    !isPromotionActive(promotion, now)
+    !isPromotionActive(
+      promotion,
+      now
+    )
   ) {
     return undefined;
   }
@@ -157,15 +190,27 @@ export function getChannelPromotion(
 
 export function calculatePromotionPrice(
   priceCents: number,
-  promotion?: Promotion
+  promotion?: Promotion,
+  now: Date = new Date()
 ): PriceResult {
+  const safePriceCents =
+    Number.isFinite(priceCents) &&
+    priceCents > 0
+      ? Math.round(priceCents)
+      : 0;
+
   if (
     !promotion ||
-    !isPromotionActive(promotion)
+    !isPromotionActive(
+      promotion,
+      now
+    )
   ) {
     return {
-      originalPriceCents: priceCents,
-      finalPriceCents: priceCents,
+      originalPriceCents:
+        safePriceCents,
+      finalPriceCents:
+        safePriceCents,
       discountCents: 0,
       discountPercent: 0,
     };
@@ -174,42 +219,59 @@ export function calculatePromotionPrice(
   let discountCents = 0;
 
   if (
-    typeof promotion.discountPercent === 'number' &&
+    typeof promotion.discountPercent ===
+      'number' &&
+    Number.isFinite(
+      promotion.discountPercent
+    ) &&
     promotion.discountPercent > 0
   ) {
     discountCents = Math.round(
-      priceCents *
+      safePriceCents *
         (promotion.discountPercent / 100)
     );
   }
 
   if (
-    typeof promotion.discountAmount === 'number' &&
+    typeof promotion.discountAmount ===
+      'number' &&
+    Number.isFinite(
+      promotion.discountAmount
+    ) &&
     promotion.discountAmount > 0
   ) {
     discountCents = Math.max(
       discountCents,
-      promotion.discountAmount
+      Math.round(
+        promotion.discountAmount
+      )
     );
   }
 
   discountCents = Math.min(
-    discountCents,
-    priceCents
+    Math.max(
+      discountCents,
+      0
+    ),
+    safePriceCents
   );
 
   const finalPriceCents =
-    priceCents - discountCents;
+    safePriceCents -
+    discountCents;
 
   const discountPercent =
-    priceCents > 0
+    safePriceCents > 0
       ? Math.round(
-          (discountCents / priceCents) * 100
+          (discountCents /
+            safePriceCents) *
+            100
         )
       : 0;
 
   return {
-    originalPriceCents: priceCents,
+    originalPriceCents:
+      safePriceCents,
     finalPriceCents,
     discountCents,
     discountPercent,
@@ -222,8 +284,15 @@ export function getProductChannelPrice(
   now: Date = new Date()
 ): PriceResult {
   const basePrice =
-    typeof channel.price === 'number'
-      ? channel.price
+    typeof channel.price ===
+        'number' &&
+      Number.isFinite(
+        channel.price
+      ) &&
+      channel.price >= 0
+      ? Math.round(
+          channel.price
+        )
       : product.basePriceCents;
 
   const promotion =
@@ -235,7 +304,8 @@ export function getProductChannelPrice(
 
   return calculatePromotionPrice(
     basePrice,
-    promotion
+    promotion,
+    now
   );
 }
 
@@ -251,6 +321,7 @@ export function getProductPrice(
 
   return calculatePromotionPrice(
     product.basePriceCents,
-    promotion
+    promotion,
+    now
   );
 }

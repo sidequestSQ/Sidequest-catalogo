@@ -1,0 +1,9 @@
+{
+  "id": "whatsapp",
+  "name": "WhatsApp",
+  "type": "whatsapp",
+  "purpose": "contato",
+  "url": "https://wa.me/5561998798508",
+  "active": true,
+  "showOnProducts": true
+}

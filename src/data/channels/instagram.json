@@ -1,0 +1,9 @@
+{
+  "id": "instagram",
+  "name": "Instagram",
+  "type": "instagram",
+  "purpose": "divulgacao",
+  "url": "https://www.instagram.com/sidequestbr/",
+  "active": true,
+  "showOnProducts": false
+}

@@ -20,36 +20,418 @@ const activeCategories = categories.filter(
 >
   <main>
     <section class="hero">
+      <div class="hero-background" aria-hidden="true">
+        <span class="hero-grid"></span>
+
+        <span class="hero-glow hero-glow-purple"></span>
+        <span class="hero-glow hero-glow-cyan"></span>
+        <span class="hero-glow hero-glow-magenta"></span>
+        <span class="hero-glow hero-glow-gold"></span>
+
+        <span class="hero-particle particle-one"></span>
+        <span class="hero-particle particle-two"></span>
+        <span class="hero-particle particle-three"></span>
+        <span class="hero-particle particle-four"></span>
+        <span class="hero-particle particle-five"></span>
+        <span class="hero-particle particle-six"></span>
+        <span class="hero-particle particle-seven"></span>
+        <span class="hero-particle particle-eight"></span>
+
+        <span class="hero-rune rune-one">✦</span>
+        <span class="hero-rune rune-two">◇</span>
+        <span class="hero-rune rune-three">+</span>
+      </div>
+
       <div class="container hero-inner">
         <div class="hero-content">
-          <span class="eyebrow">CATÁLOGO OFICIAL</span>
+          <span class="eyebrow hero-eyebrow">
+            <span class="eyebrow-dot"></span>
+            CATÁLOGO OFICIAL SIDE QUEST
+          </span>
 
           <h1>
-            Encontre algo que
-            <span>merece entrar</span>
-            na sua coleção.
+            Sua próxima
+            <span>descoberta</span>
+            começa aqui.
           </h1>
 
-          <p>
-            Produtos geek, colecionáveis e itens especiais selecionados
-            pela Side Quest.
+          <p class="hero-description">
+            Explore produtos geek, colecionáveis e itens especiais
+            selecionados para quem está sempre atrás de algo novo
+            para adicionar à coleção.
           </p>
+
+          <div class="catalog-notice">
+            <span class="notice-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12 3.5 19 7v5.2c0 4.2-2.7 7.3-7 8.8-4.3-1.5-7-4.6-7-8.8V7l7-3.5Z"
+                />
+                <path d="m9 12 2 2 4-4" />
+              </svg>
+            </span>
+
+            <span>
+              <strong>Uma vitrine, não um checkout.</strong>
+              <small>
+                A compra é feita diretamente pelos canais oficiais
+                indicados em cada produto.
+              </small>
+            </span>
+          </div>
 
           <div class="hero-actions">
             <a href="/catalogo/" class="primary-button">
-              Explorar catálogo
+              <span>Explorar catálogo</span>
+              <span class="button-arrow" aria-hidden="true">→</span>
             </a>
 
             <a href="#destaques" class="secondary-button">
-              Ver destaques
+              <span>Ver seleção</span>
+              <span class="button-arrow" aria-hidden="true">↓</span>
             </a>
+          </div>
+
+          <div class="hero-status">
+            <span class="status-line"></span>
+            <span>Descubra o próximo item da sua coleção.</span>
           </div>
         </div>
 
-        <div class="hero-decoration" aria-hidden="true">
+        <div
+          class="hero-decoration"
+          aria-hidden="true"
+        >
+          <div class="hero-aura aura-one"></div>
+          <div class="hero-aura aura-two"></div>
+          <div class="hero-aura aura-three"></div>
+
           <div class="orb orb-one"></div>
           <div class="orb orb-two"></div>
-          <div class="hero-symbol">SQ</div>
+          <div class="orb orb-three"></div>
+
+          <div class="sword-ring ring-one"></div>
+          <div class="sword-ring ring-two"></div>
+          <div class="sword-ring ring-three"></div>
+
+          <div class="duel-stage">
+            <span class="duel-trail trail-left"></span>
+            <span class="duel-trail trail-right"></span>
+
+            <svg
+              class="duel-swords"
+              viewBox="0 0 360 320"
+              focusable="false"
+            >
+              <defs>
+                <linearGradient
+                  id="bladeCyan"
+                  x1="0"
+                  y1="0"
+                  x2="1"
+                  y2="1"
+                >
+                  <stop offset="0%" stop-color="#ffffff" />
+                  <stop offset="24%" stop-color="#d9fbff" />
+                  <stop offset="55%" stop-color="#5fc8d8" />
+                  <stop offset="100%" stop-color="#3f91a5" />
+                </linearGradient>
+
+                <linearGradient
+                  id="bladeMagenta"
+                  x1="0"
+                  y1="0"
+                  x2="1"
+                  y2="1"
+                >
+                  <stop offset="0%" stop-color="#ffffff" />
+                  <stop offset="24%" stop-color="#f2d8ff" />
+                  <stop offset="55%" stop-color="#b06ac8" />
+                  <stop offset="100%" stop-color="#7f4d99" />
+                </linearGradient>
+
+                <linearGradient
+                  id="guardCyan"
+                  x1="0"
+                  y1="0"
+                  x2="1"
+                  y2="0"
+                >
+                  <stop offset="0%" stop-color="#3f91a5" />
+                  <stop offset="45%" stop-color="#5fc8d8" />
+                  <stop offset="100%" stop-color="#8de7f2" />
+                </linearGradient>
+
+                <linearGradient
+                  id="guardMagenta"
+                  x1="0"
+                  y1="0"
+                  x2="1"
+                  y2="0"
+                >
+                  <stop offset="0%" stop-color="#7f4d99" />
+                  <stop offset="45%" stop-color="#b06ac8" />
+                  <stop offset="100%" stop-color="#df9aed" />
+                </linearGradient>
+
+                <linearGradient
+                  id="handle"
+                  x1="0"
+                  y1="0"
+                  x2="1"
+                  y2="1"
+                >
+                  <stop offset="0%" stop-color="#3c416b" />
+                  <stop offset="50%" stop-color="#6879a7" />
+                  <stop offset="100%" stop-color="#20243d" />
+                </linearGradient>
+
+                <radialGradient id="impactCore">
+                  <stop offset="0%" stop-color="#ffffff" stop-opacity="1" />
+                  <stop offset="24%" stop-color="#d8fbff" stop-opacity="0.95" />
+                  <stop offset="55%" stop-color="#5fc8d8" stop-opacity="0.42" />
+                  <stop offset="100%" stop-color="#5fc8d8" stop-opacity="0" />
+                </radialGradient>
+
+                <filter
+                  id="swordShadow"
+                  x="-100%"
+                  y="-100%"
+                  width="300%"
+                  height="300%"
+                >
+                  <feGaussianBlur
+                    in="SourceAlpha"
+                    stdDeviation="4"
+                    result="blur"
+                  />
+                  <feOffset dy="2" />
+                  <feComponentTransfer>
+                    <feFuncA type="linear" slope="0.45" />
+                  </feComponentTransfer>
+                  <feMerge>
+                    <feMergeNode />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+
+                <filter
+                  id="impactBlur"
+                  x="-200%"
+                  y="-200%"
+                  width="500%"
+                  height="500%"
+                >
+                  <feGaussianBlur stdDeviation="2" />
+                </filter>
+              </defs>
+
+              <g
+                class="sword sword-left"
+                filter="url(#swordShadow)"
+              >
+                <path
+                  d="M82 20 L111 49 L95 169 L82 195 L69 169 L53 49 Z"
+                  fill="url(#bladeCyan)"
+                />
+
+                <path
+                  d="M82 24 L82 190"
+                  fill="none"
+                  stroke="#ffffff"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  opacity="0.72"
+                />
+
+                <path
+                  d="M58 49 L82 25 L106 49"
+                  fill="none"
+                  stroke="#ffffff"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  opacity="0.68"
+                />
+
+                <path
+                  d="M50 166 Q82 179 114 166"
+                  fill="none"
+                  stroke="url(#guardCyan)"
+                  stroke-width="13"
+                  stroke-linecap="round"
+                />
+
+                <path
+                  d="M54 165 Q82 173 110 165"
+                  fill="none"
+                  stroke="#c9fbff"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  opacity="0.85"
+                />
+
+                <rect
+                  x="71"
+                  y="176"
+                  width="22"
+                  height="55"
+                  rx="8"
+                  fill="url(#handle)"
+                  stroke="#627a9e"
+                  stroke-width="3"
+                />
+
+                <path
+                  d="M72 190 L92 201 M72 207 L92 218"
+                  stroke="#a9bee7"
+                  stroke-width="3"
+                  opacity="0.58"
+                />
+
+                <path
+                  d="M68 230 L96 230 L82 258 Z"
+                  fill="#5fc8d8"
+                />
+
+                <circle
+                  cx="82"
+                  cy="177"
+                  r="5"
+                  fill="#d9fbff"
+                />
+              </g>
+
+              <g
+                class="sword sword-right"
+                filter="url(#swordShadow)"
+              >
+                <path
+                  d="M278 20 L307 49 L291 169 L278 195 L265 169 L249 49 Z"
+                  fill="url(#bladeMagenta)"
+                />
+
+                <path
+                  d="M278 24 L278 190"
+                  fill="none"
+                  stroke="#ffffff"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  opacity="0.72"
+                />
+
+                <path
+                  d="M254 49 L278 25 L302 49"
+                  fill="none"
+                  stroke="#ffffff"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  opacity="0.68"
+                />
+
+                <path
+                  d="M246 166 Q278 179 310 166"
+                  fill="none"
+                  stroke="url(#guardMagenta)"
+                  stroke-width="13"
+                  stroke-linecap="round"
+                />
+
+                <path
+                  d="M250 165 Q278 173 306 165"
+                  fill="none"
+                  stroke="#f5dcff"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  opacity="0.85"
+                />
+
+                <rect
+                  x="267"
+                  y="176"
+                  width="22"
+                  height="55"
+                  rx="8"
+                  fill="url(#handle)"
+                  stroke="#8f70bd"
+                  stroke-width="3"
+                />
+
+                <path
+                  d="M268 190 L288 201 M268 207 L288 218"
+                  stroke="#c3b1e8"
+                  stroke-width="3"
+                  opacity="0.58"
+                />
+
+                <path
+                  d="M264 230 L292 230 L278 258 Z"
+                  fill="#b06ac8"
+                />
+
+                <circle
+                  cx="278"
+                  cy="177"
+                  r="5"
+                  fill="#f2d8ff"
+                />
+              </g>
+
+              <g class="impact">
+                <circle
+                  cx="180"
+                  cy="100"
+                  r="62"
+                  fill="url(#impactCore)"
+                />
+
+                <circle
+                  cx="180"
+                  cy="100"
+                  r="12"
+                  fill="#ffffff"
+                  opacity="0.9"
+                />
+
+                <path
+                  d="M180 29 L180 0 M180 171 L180 200
+                     M109 100 L79 100 M251 100 L281 100
+                     M130 50 L109 29 M230 50 L251 29
+                     M130 150 L109 171 M230 150 L251 171"
+                  fill="none"
+                  stroke="#d9fbff"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                />
+
+                <path
+                  d="M180 42 L188 82 L218 100 L188 108 L180 151
+                     L172 108 L142 100 L172 82 Z"
+                  fill="none"
+                  stroke="#ffffff"
+                  stroke-width="2"
+                  opacity="0.78"
+                />
+              </g>
+
+              <g class="spark spark-one">
+                <path d="M180 16 L180 30 M173 23 L187 23" />
+              </g>
+
+              <g class="spark spark-two">
+                <path d="M82 89 L82 103 M75 96 L89 96" />
+              </g>
+
+              <g class="spark spark-three">
+                <path d="M278 89 L278 103 M271 96 L285 96" />
+              </g>
+            </svg>
+          </div>
+
+          <div class="hero-emblem">
+            <span>✦</span>
+            <span>QUEST</span>
+            <span>✦</span>
+          </div>
         </div>
       </div>
     </section>
@@ -58,21 +440,34 @@ const activeCategories = categories.filter(
       <div class="container">
         <div class="section-heading">
           <div>
-            <span class="eyebrow">EXPLORE</span>
-            <h2>Categorias</h2>
+            <span class="eyebrow">
+              <span class="eyebrow-dot"></span>
+              EXPLORE
+            </span>
+
+            <h2>Encontre sua próxima descoberta</h2>
           </div>
 
-          <a href="/catalogo/">Ver tudo →</a>
+          <a href="/catalogo/" class="section-link">
+            Ver tudo <span aria-hidden="true">→</span>
+          </a>
         </div>
 
+        <p class="section-intro">
+          Daquele item que você estava procurando àquela peça que
+          simplesmente precisava entrar para a coleção.
+        </p>
+
         <div class="category-grid">
-          {activeCategories.map((category) => (
+          {activeCategories.map((category, index) => (
             <a
               href={`/catalogo/?categoria=${category.slug}`}
-              class="category-card"
+              class={`category-card category-card-${(index % 4) + 1}`}
             >
               <span class="category-icon" aria-hidden="true">
-                ✦
+                <span class="category-icon-mark">
+                  {index % 4 === 0 ? '◇' : index % 4 === 1 ? '✦' : index % 4 === 2 ? '◈' : '＋'}
+                </span>
               </span>
 
               <strong>{category.name}</strong>
@@ -80,6 +475,10 @@ const activeCategories = categories.filter(
               {category.description && (
                 <p>{category.description}</p>
               )}
+
+              <span class="category-arrow" aria-hidden="true">
+                ↗
+              </span>
             </a>
           ))}
         </div>
@@ -90,12 +489,23 @@ const activeCategories = categories.filter(
       <div class="container">
         <div class="section-heading">
           <div>
-            <span class="eyebrow">EM DESTAQUE</span>
-            <h2>Escolhas da Side Quest</h2>
+            <span class="eyebrow">
+              <span class="eyebrow-dot"></span>
+              SELEÇÃO SIDE QUEST
+            </span>
+
+            <h2>Itens que merecem atenção</h2>
           </div>
 
-          <a href="/catalogo/">Ver catálogo →</a>
+          <a href="/catalogo/" class="section-link">
+            Ver catálogo <span aria-hidden="true">→</span>
+          </a>
         </div>
+
+        <p class="section-intro">
+          Uma seleção de peças para começar sua próxima quest —
+          ou encontrar aquela que estava faltando.
+        </p>
 
         {featuredProducts.length > 0 ? (
           <div class="product-grid">
@@ -119,30 +529,249 @@ const activeCategories = categories.filter(
   .hero {
     position: relative;
     overflow: hidden;
+    isolation: isolate;
     border-bottom: 1px solid var(--color-border);
+    background:
+      radial-gradient(
+        circle at 76% 42%,
+        rgba(118, 103, 168, 0.15),
+        transparent 28%
+      ),
+      radial-gradient(
+        circle at 96% 12%,
+        rgba(95, 200, 216, 0.06),
+        transparent 22%
+      ),
+      radial-gradient(
+        circle at 10% 85%,
+        rgba(176, 106, 200, 0.045),
+        transparent 25%
+      );
   }
 
   .hero-inner {
     position: relative;
     display: grid;
-    min-height: 580px;
+    min-height: 620px;
     align-items: center;
     padding-top: 70px;
     padding-bottom: 70px;
   }
 
+  .hero-background {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(
+        rgba(145, 134, 189, 0.035) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        90deg,
+        rgba(145, 134, 189, 0.035) 1px,
+        transparent 1px
+      );
+    background-size: 42px 42px;
+    mask-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.8),
+      transparent 90%
+    );
+    opacity: 0.55;
+  }
+
+  .hero-glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(55px);
+    pointer-events: none;
+  }
+
+  .hero-glow-purple {
+    top: -140px;
+    right: 10%;
+    width: 360px;
+    height: 360px;
+    background: rgba(118, 103, 168, 0.11);
+    animation: hero-glow-pulse 7s ease-in-out infinite;
+  }
+
+  .hero-glow-cyan {
+    right: -120px;
+    bottom: -160px;
+    width: 360px;
+    height: 360px;
+    background: rgba(95, 200, 216, 0.065);
+    animation: hero-glow-pulse 9s ease-in-out infinite reverse;
+  }
+
+  .hero-glow-magenta {
+    top: 38%;
+    left: -180px;
+    width: 280px;
+    height: 280px;
+    background: rgba(176, 106, 200, 0.05);
+    animation: hero-glow-pulse 11s ease-in-out infinite;
+  }
+
+  .hero-glow-gold {
+    top: 16%;
+    right: 36%;
+    width: 150px;
+    height: 150px;
+    background: rgba(213, 168, 92, 0.035);
+    animation: hero-glow-pulse 8s ease-in-out infinite reverse;
+  }
+
+  .hero-particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--color-cyan);
+    box-shadow: 0 0 12px rgba(95, 200, 216, 0.5);
+    opacity: 0.55;
+    animation: particle-float 6s ease-in-out infinite;
+  }
+
+  .particle-one {
+    top: 20%;
+    left: 44%;
+  }
+
+  .particle-two {
+    top: 68%;
+    left: 52%;
+    width: 3px;
+    height: 3px;
+    background: var(--color-magenta);
+    box-shadow: 0 0 12px rgba(176, 106, 200, 0.5);
+    animation-delay: -2s;
+  }
+
+  .particle-three {
+    top: 32%;
+    right: 18%;
+    width: 3px;
+    height: 3px;
+    background: var(--color-gold);
+    box-shadow: 0 0 12px rgba(213, 168, 92, 0.45);
+    animation-delay: -4s;
+  }
+
+  .particle-four {
+    bottom: 18%;
+    right: 34%;
+    width: 2px;
+    height: 2px;
+    animation-delay: -1s;
+  }
+
+  .particle-five {
+    top: 14%;
+    right: 38%;
+    width: 2px;
+    height: 2px;
+    background: var(--color-magenta);
+    box-shadow: 0 0 10px rgba(176, 106, 200, 0.4);
+    animation-delay: -3s;
+  }
+
+  .particle-six {
+    top: 55%;
+    left: 31%;
+    width: 2px;
+    height: 2px;
+    background: var(--color-gold);
+    box-shadow: 0 0 10px rgba(213, 168, 92, 0.4);
+    animation-delay: -5s;
+  }
+
+  .particle-seven {
+    bottom: 28%;
+    left: 12%;
+    width: 3px;
+    height: 3px;
+    background: var(--color-cyan);
+    animation-delay: -1.5s;
+  }
+
+  .particle-eight {
+    top: 23%;
+    right: 8%;
+    width: 2px;
+    height: 2px;
+    background: var(--color-primary-light);
+    box-shadow: 0 0 10px rgba(145, 134, 189, 0.45);
+    animation-delay: -4.5s;
+  }
+
+  .hero-rune {
+    position: absolute;
+    color: var(--color-primary-light);
+    font-size: 1rem;
+    opacity: 0.22;
+    animation: rune-drift 8s ease-in-out infinite;
+  }
+
+  .rune-one {
+    top: 24%;
+    left: 18%;
+  }
+
+  .rune-two {
+    top: 64%;
+    right: 42%;
+    color: var(--color-cyan);
+    animation-delay: -3s;
+  }
+
+  .rune-three {
+    bottom: 16%;
+    right: 17%;
+    color: var(--color-gold);
+    animation-delay: -5s;
+  }
+
   .hero-content {
     position: relative;
-    z-index: 2;
+    z-index: 4;
     max-width: 700px;
+    animation: hero-content-in 850ms cubic-bezier(0.2, 0.75, 0.2, 1) both;
+    animation-delay: 250ms;
+  }
+
+  .hero-eyebrow {
+    animation: eyebrow-enter 700ms ease both;
+    animation-delay: 150ms;
   }
 
   .eyebrow {
-    display: inline-block;
-    color: var(--color-primary);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--color-primary-light);
     font-size: 0.75rem;
     font-weight: 900;
     letter-spacing: 0.16em;
+  }
+
+  .eyebrow-dot {
+    width: 6px;
+    height: 6px;
+    flex: 0 0 6px;
+    border-radius: 50%;
+    background: var(--color-cyan);
+    box-shadow: 0 0 10px rgba(95, 200, 216, 0.55);
+    animation: eyebrow-pulse 3s ease-in-out infinite;
   }
 
   h1 {
@@ -157,19 +786,84 @@ const activeCategories = categories.filter(
     display: block;
     background: linear-gradient(
       100deg,
-      var(--color-primary-light),
-      var(--color-primary),
-      var(--color-accent)
+      #a999ed 0%,
+      #8c7ad0 30%,
+      #68bfd0 62%,
+      #b06ac8 82%,
+      #a999ed 100%
     );
+    background-size: 220% auto;
     background-clip: text;
     color: transparent;
+    animation: title-shimmer 8s ease-in-out infinite;
   }
 
-  .hero-content > p {
+  .hero-description {
     max-width: 580px;
     margin: 0;
     color: var(--color-text-muted);
     font-size: clamp(1rem, 2vw, 1.15rem);
+    line-height: 1.72;
+  }
+
+  .catalog-notice {
+    display: flex;
+    max-width: 580px;
+    align-items: center;
+    gap: 12px;
+    margin-top: 24px;
+    padding: 12px 14px;
+    border: 1px solid rgba(95, 200, 216, 0.12);
+    border-radius: var(--radius-md);
+    background:
+      linear-gradient(
+        110deg,
+        rgba(95, 200, 216, 0.055),
+        rgba(118, 103, 168, 0.055)
+      );
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.025);
+    animation: notice-enter 750ms ease both;
+    animation-delay: 500ms;
+  }
+
+  .notice-icon {
+    display: grid;
+    width: 34px;
+    height: 34px;
+    flex: 0 0 34px;
+    place-items: center;
+    border: 1px solid rgba(95, 200, 216, 0.2);
+    border-radius: 9px;
+    background: rgba(95, 200, 216, 0.07);
+    color: var(--color-cyan);
+  }
+
+  .notice-icon svg {
+    width: 19px;
+    height: 19px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .catalog-notice strong,
+  .catalog-notice small {
+    display: block;
+  }
+
+  .catalog-notice strong {
+    color: var(--color-text);
+    font-size: 0.82rem;
+  }
+
+  .catalog-notice small {
+    margin-top: 3px;
+    color: var(--color-text-soft);
+    font-size: 0.72rem;
+    line-height: 1.45;
   }
 
   .hero-actions {
@@ -181,33 +875,219 @@ const activeCategories = categories.filter(
 
   .primary-button,
   .secondary-button {
+    position: relative;
     display: inline-flex;
     min-height: 48px;
     align-items: center;
     justify-content: center;
+    gap: 12px;
+    overflow: hidden;
     padding: 0 20px;
     border-radius: var(--radius-md);
     font-weight: 800;
+    transition:
+      transform var(--transition-base),
+      box-shadow var(--transition-base),
+      border-color var(--transition-base),
+      background var(--transition-base);
   }
 
-  .primary-button {
-    background: var(--color-primary);
-    color: var(--color-bg);
+.primary-button {
+    background:
+      linear-gradient(
+        110deg,
+        #7667a8 0%,
+        #806db7 35%,
+        #6f8ab4 68%,
+        #5f9fb1 100%
+      );
+    color: #f7f5ff;
+    box-shadow:
+      0 8px 24px rgba(118, 103, 168, 0.2);
+  }
+
+  .primary-button::before {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.15) 50%,
+      transparent 70%
+    );
+    content: "";
+    transform: translateX(-120%);
+    transition: transform 600ms ease;
+  }
+
+  .primary-button:hover {
+    transform: translateY(-3px);
+    box-shadow:
+      0 12px 30px rgba(118, 103, 168, 0.28),
+      0 0 24px rgba(95, 200, 216, 0.08);
+  }
+
+  .primary-button:hover::before {
+    transform: translateX(120%);
   }
 
   .secondary-button {
-    border: 1px solid var(--color-border);
-    background: var(--color-surface);
+    border: 1px solid var(--color-border-strong);
+    background: rgba(37, 42, 61, 0.7);
     color: var(--color-text);
   }
 
+  .secondary-button:hover {
+    transform: translateY(-3px);
+    border-color: rgba(95, 200, 216, 0.28);
+    background: rgba(42, 48, 69, 0.85);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15);
+  }
+
+  .button-arrow {
+    color: var(--color-cyan);
+    transition: transform var(--transition-base);
+  }
+
+  .primary-button:hover .button-arrow {
+    transform: translateX(4px);
+  }
+
+  .secondary-button:hover .button-arrow {
+    transform: translateY(3px);
+  }
+
+  .hero-status {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-top: 22px;
+    color: rgba(165, 169, 184, 0.75);
+    font-size: 0.76rem;
+  }
+
+  .status-line {
+    width: 22px;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      var(--color-cyan),
+      transparent
+    );
+  }
+
+  /* =========================================================
+   DUEL — AJUSTE RESPONSIVO
+   ========================================================= */
+
+@media (max-width: 700px) {
   .hero-decoration {
+    width: 100%;
+    max-width: 100%;
+    height: 290px;
+    overflow: hidden;
+  }
+
+  .hero-inner {
+  min-height: 460px;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+  .duel-stage {
+    inset: 0;
+    width: 100%;
+    display: grid;
+    place-items: center;
+  }
+
+  .duel-swords {
+    width: min(390px, 112%);
+    max-width: none;
+    transform: translateX(0);
+  }
+
+  .duel-trail {
+    width: 95px;
+  }
+
+  .trail-left {
+    left: 2%;
+  }
+
+  .trail-right {
+    right: 2%;
+  }
+}
+
+@media (max-width: 480px) {
+  .duel-swords {
+    width: 355px;
+    max-width: 112%;
+  }
+
+  .duel-trail {
+    width: 70px;
+  }
+
+  .trail-left {
+    left: 0;
+  }
+
+  .trail-right {
+    right: 0;
+  }
+}
+
+@media (max-width: 380px) {
+  .duel-swords {
+    width: 330px;
+    max-width: 112%;
+  }
+}
+
+  .hero-aura {
     position: absolute;
-    top: 50%;
-    right: -90px;
+    inset: 50%;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .aura-one {
     width: 430px;
     height: 430px;
-    transform: translateY(-50%);
+    background: radial-gradient(
+      circle,
+      rgba(118, 103, 168, 0.1),
+      transparent 66%
+    );
+    filter: blur(12px);
+    animation: aura-pulse 6s ease-in-out infinite;
+  }
+
+  .aura-two {
+    width: 330px;
+    height: 330px;
+    background: radial-gradient(
+      circle,
+      rgba(95, 200, 216, 0.07),
+      transparent 64%
+    );
+    filter: blur(10px);
+    animation: aura-pulse 5s ease-in-out infinite reverse;
+  }
+
+  .aura-three {
+    width: 240px;
+    height: 240px;
+    background: radial-gradient(
+      circle,
+      rgba(176, 106, 200, 0.08),
+      transparent 66%
+    );
+    filter: blur(8px);
+    animation: aura-pulse 7s ease-in-out infinite;
   }
 
   .orb {
@@ -218,26 +1098,185 @@ const activeCategories = categories.filter(
 
   .orb-one {
     inset: 50px;
-    background: rgba(145, 134, 189, 0.1);
+    border: 1px solid rgba(145, 134, 189, 0.08);
+    background: rgba(145, 134, 189, 0.075);
+    box-shadow:
+      inset 0 0 50px rgba(118, 103, 168, 0.06),
+      0 0 80px rgba(118, 103, 168, 0.06);
+    animation: orb-pulse 6s ease-in-out infinite;
   }
 
   .orb-two {
     inset: 110px;
-    background: rgba(98, 122, 158, 0.12);
+    border: 1px solid rgba(95, 200, 216, 0.1);
+    background: rgba(95, 200, 216, 0.06);
+    animation: orb-pulse 8s ease-in-out infinite reverse;
   }
 
-  .hero-symbol {
+  .orb-three {
+    inset: 165px;
+    border: 1px solid rgba(176, 106, 200, 0.1);
+    background: rgba(176, 106, 200, 0.035);
+    animation: orb-pulse 5s ease-in-out infinite;
+  }
+
+  .sword-ring {
     position: absolute;
-    inset: 0;
-    display: grid;
-    place-items: center;
-    color: rgba(228, 229, 236, 0.1);
-    font-size: 9rem;
-    font-weight: 950;
+    top: 50%;
+    left: 50%;
+    border: 1px solid rgba(145, 134, 189, 0.12);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .ring-one {
+    width: 360px;
+    height: 360px;
+    animation: ring-rotate 24s linear infinite;
+  }
+
+  .ring-two {
+    width: 285px;
+    height: 285px;
+    border-color: rgba(95, 200, 216, 0.1);
+    border-style: dashed;
+    animation: ring-rotate-reverse 19s linear infinite;
+  }
+
+  .ring-three {
+    width: 410px;
+    height: 410px;
+    border-color: rgba(213, 168, 92, 0.055);
+    border-style: dotted;
+    animation: ring-rotate 34s linear infinite reverse;
+  }
+
+  .duel-stage {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: visible;
+}
+
+.duel-swords {
+  position: relative;
+  display: block;
+  width: min(470px, 92%);
+  max-width: none;
+  height: auto;
+  overflow: visible;
+  transform: translateX(0);
+  filter:
+    drop-shadow(0 0 18px rgba(118, 103, 168, 0.25))
+    drop-shadow(0 0 46px rgba(95, 200, 216, 0.1));
+}
+
+.sword {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+  .sword {
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  .sword-left {
+    animation: sword-left-duel 2.2s cubic-bezier(0.2, 0.72, 0.18, 1) both;
+  }
+
+  .sword-right {
+    animation: sword-right-duel 2.2s cubic-bezier(0.2, 0.72, 0.18, 1) both;
+  }
+
+  .impact {
+    transform-box: fill-box;
+    transform-origin: center;
+    opacity: 0;
+    animation: impact-burst 2.2s ease both;
+  }
+
+  .spark {
+    fill: none;
+    stroke: #ffffff;
+    stroke-width: 2;
+    stroke-linecap: round;
+    opacity: 0;
+  }
+
+  .spark-one {
+    animation: spark-pop 2.2s ease both;
+  }
+
+  .spark-two {
+    animation: spark-pop 2.2s ease 80ms both;
+  }
+
+  .spark-three {
+    animation: spark-pop 2.2s ease 130ms both;
+  }
+
+  .duel-trail {
+    position: absolute;
+    top: 42%;
+    width: 150px;
+    height: 1px;
+    opacity: 0;
+    filter: blur(1px);
+  }
+
+  .trail-left {
+    left: 4%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(95, 200, 216, 0.7)
+    );
+    transform: rotate(-24deg);
+    animation: trail-left-in 2.2s ease both;
+  }
+
+  .trail-right {
+    right: 4%;
+    background: linear-gradient(
+      90deg,
+      rgba(176, 106, 200, 0.7),
+      transparent
+    );
+    transform: rotate(24deg);
+    animation: trail-right-in 2.2s ease both;
+  }
+
+  .hero-emblem {
+    position: absolute;
+    right: 16%;
+    bottom: 12%;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--color-gold);
+    font-size: 0.58rem;
+    font-weight: 900;
+    letter-spacing: 0.28em;
+    opacity: 0.55;
+    animation: emblem-in 900ms ease 1.3s both;
+  }
+
+  .hero-emblem span:first-child,
+  .hero-emblem span:last-child {
+    font-size: 0.45rem;
+  }
+
+  .hero-decoration:hover .duel-swords {
+    filter:
+      drop-shadow(0 0 24px rgba(118, 103, 168, 0.38))
+      drop-shadow(0 0 54px rgba(95, 200, 216, 0.16));
   }
 
   .categories-section,
   .featured-section {
+    position: relative;
     padding: 76px 0;
   }
 
@@ -246,18 +1285,37 @@ const activeCategories = categories.filter(
     align-items: end;
     justify-content: space-between;
     gap: 20px;
-    margin-bottom: 28px;
+    margin-bottom: 12px;
   }
 
   .section-heading h2 {
     margin: 8px 0 0;
     font-size: clamp(1.7rem, 5vw, 2.5rem);
+    letter-spacing: -0.025em;
   }
 
-  .section-heading > a {
+  .section-intro {
+    max-width: 650px;
+    margin: 0 0 28px;
+    color: var(--color-text-muted);
+    line-height: 1.65;
+  }
+
+  .section-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
     color: var(--color-primary-light);
     font-weight: 700;
     white-space: nowrap;
+    transition:
+      color var(--transition-base),
+      transform var(--transition-base);
+  }
+
+  .section-link:hover {
+    color: var(--color-cyan);
+    transform: translateX(3px);
   }
 
   .category-grid {
@@ -266,41 +1324,169 @@ const activeCategories = categories.filter(
     gap: 12px;
   }
 
-  .category-card {
-    min-height: 145px;
+.category-card {
+    position: relative;
+    min-height: 155px;
     padding: 20px;
+    overflow: hidden;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
-    background: var(--color-surface);
+    background:
+      linear-gradient(
+        145deg,
+        rgba(37, 42, 61, 0.92),
+        rgba(28, 32, 50, 0.96)
+      );
     transition:
-      transform 0.2s ease,
-      border-color 0.2s ease;
+      transform var(--transition-base),
+      border-color var(--transition-base),
+      box-shadow var(--transition-base);
+  }
+
+  .category-card::before {
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    background: var(--category-color);
+    opacity: 0.07;
+    filter: blur(20px);
+    content: "";
+    transition:
+      opacity var(--transition-base),
+      transform var(--transition-slow);
+  }
+
+  .category-card::after {
+    position: absolute;
+    right: 18px;
+    top: 18px;
+    width: 34px;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--category-color)
+    );
+    opacity: 0.5;
+    content: "";
+    transform: scaleX(0.4);
+    transform-origin: right;
+    transition:
+      transform var(--transition-base),
+      opacity var(--transition-base);
   }
 
   .category-card:hover {
-    transform: translateY(-3px);
-    border-color: rgba(145, 134, 189, 0.35);
+    transform: translateY(-5px);
+    border-color: var(--category-border);
+    box-shadow:
+      0 14px 32px rgba(0, 0, 0, 0.18),
+      0 0 24px var(--category-glow);
+  }
+
+  .category-card:hover::before {
+    opacity: 0.15;
+    transform: scale(1.25);
+  }
+
+  .category-card:hover::after {
+    opacity: 0.9;
+    transform: scaleX(1);
+  }
+
+  .category-card-1 {
+    --category-color: var(--color-cyan);
+    --category-border: rgba(95, 200, 216, 0.25);
+    --category-glow: rgba(95, 200, 216, 0.07);
+  }
+
+  .category-card-2 {
+    --category-color: var(--color-magenta);
+    --category-border: rgba(176, 106, 200, 0.25);
+    --category-glow: rgba(176, 106, 200, 0.07);
+  }
+
+  .category-card-3 {
+    --category-color: var(--color-gold);
+    --category-border: rgba(213, 168, 92, 0.25);
+    --category-glow: rgba(213, 168, 92, 0.06);
+  }
+
+  .category-card-4 {
+    --category-color: var(--color-primary-light);
+    --category-border: rgba(145, 134, 189, 0.27);
+    --category-glow: rgba(145, 134, 189, 0.07);
   }
 
   .category-icon {
+    position: relative;
     display: grid;
-    width: 34px;
-    height: 34px;
-    margin-bottom: 20px;
+    width: 38px;
+    height: 38px;
+    margin-bottom: 18px;
     place-items: center;
-    border-radius: 9px;
-    background: var(--color-surface-soft);
-    color: var(--color-primary);
+    border: 1px solid var(--category-border);
+    border-radius: 10px;
+    background: color-mix(
+      in srgb,
+      var(--category-color) 10%,
+      var(--color-surface-soft)
+    );
+    color: var(--category-color);
+    transition:
+      transform var(--transition-base),
+      box-shadow var(--transition-base),
+      background var(--transition-base);
+  }
+
+  .category-icon-mark {
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  .category-card:hover .category-icon {
+    transform: rotate(6deg) scale(1.06);
+    background: color-mix(
+      in srgb,
+      var(--category-color) 16%,
+      var(--color-surface-soft)
+    );
+    box-shadow: 0 0 16px var(--category-glow);
   }
 
   .category-card strong {
+    position: relative;
     display: block;
   }
 
   .category-card p {
+    position: relative;
+    max-width: 85%;
     margin: 7px 0 0;
     color: var(--color-text-muted);
     font-size: 0.82rem;
+    line-height: 1.5;
+  }
+
+  .category-arrow {
+    position: absolute;
+    right: 18px;
+    bottom: 17px;
+    color: var(--category-color);
+    font-size: 1rem;
+    opacity: 0;
+    transform: translate(-4px, 4px);
+    transition:
+      opacity var(--transition-base),
+      transform var(--transition-base);
+  }
+
+  .category-card:hover .category-arrow {
+    opacity: 0.9;
+    transform: translate(0, 0);
   }
 
   .product-grid {
@@ -317,6 +1503,284 @@ const activeCategories = categories.filter(
     text-align: center;
   }
 
+  @keyframes hero-content-in {
+    from {
+      opacity: 0;
+      transform: translateY(22px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes eyebrow-enter {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes notice-enter {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes title-shimmer {
+    0%,
+    100% {
+      background-position: 0% center;
+    }
+
+    50% {
+      background-position: 100% center;
+    }
+  }
+
+  @keyframes eyebrow-pulse {
+    0%,
+    100% {
+      opacity: 0.65;
+      transform: scale(0.9);
+    }
+
+    50% {
+      opacity: 1;
+      transform: scale(1.15);
+    }
+  }
+
+  @keyframes hero-glow-pulse {
+    0%,
+    100% {
+      opacity: 0.65;
+      transform: scale(0.95);
+    }
+
+    50% {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+  }
+
+  @keyframes particle-float {
+    0%,
+    100% {
+      opacity: 0.25;
+      transform: translateY(0);
+    }
+
+    50% {
+      opacity: 0.75;
+      transform: translateY(-12px);
+    }
+  }
+
+  @keyframes rune-drift {
+    0%,
+    100% {
+      opacity: 0.16;
+      transform: translateY(0) rotate(0deg);
+    }
+
+    50% {
+      opacity: 0.34;
+      transform: translateY(-10px) rotate(12deg);
+    }
+  }
+
+  @keyframes aura-pulse {
+    0%,
+    100% {
+      opacity: 0.65;
+      transform: translate(-50%, -50%) scale(0.96);
+    }
+
+    50% {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1.04);
+    }
+  }
+
+  @keyframes orb-pulse {
+    0%,
+    100% {
+      opacity: 0.65;
+      transform: scale(0.98);
+    }
+
+    50% {
+      opacity: 1;
+      transform: scale(1.02);
+    }
+  }
+
+  @keyframes ring-rotate {
+    from {
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    to {
+      transform: translate(-50%, -50%) rotate(360deg);
+    }
+  }
+
+  @keyframes ring-rotate-reverse {
+    from {
+      transform: translate(-50%, -50%) rotate(360deg);
+    }
+
+    to {
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+  }
+
+  @keyframes sword-left-duel {
+    0% {
+      opacity: 0;
+      transform: translate(-115px, 58px) rotate(-58deg) scale(0.86);
+    }
+
+    22% {
+      opacity: 1;
+    }
+
+    56% {
+      transform: translate(18px, 12px) rotate(-42deg) scale(1);
+    }
+
+    70%,
+    100% {
+      opacity: 1;
+      transform: translate(0, 0) rotate(-38deg) scale(1);
+    }
+  }
+
+  @keyframes sword-right-duel {
+    0% {
+      opacity: 0;
+      transform: translate(115px, 58px) rotate(58deg) scale(0.86);
+    }
+
+    22% {
+      opacity: 1;
+    }
+
+    56% {
+      transform: translate(-18px, 12px) rotate(42deg) scale(1);
+    }
+
+    70%,
+    100% {
+      opacity: 1;
+      transform: translate(0, 0) rotate(38deg) scale(1);
+    }
+  }
+
+  @keyframes impact-burst {
+    0%,
+    48% {
+      opacity: 0;
+      transform: scale(0.2);
+    }
+
+    56% {
+      opacity: 1;
+      transform: scale(1.35);
+    }
+
+    64% {
+      opacity: 0.85;
+      transform: scale(0.9);
+    }
+
+    78%,
+    100% {
+      opacity: 0.42;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes spark-pop {
+    0%,
+    45% {
+      opacity: 0;
+      transform: scale(0.3);
+    }
+
+    58% {
+      opacity: 1;
+      transform: scale(1.2);
+    }
+
+    72%,
+    100% {
+      opacity: 0.3;
+      transform: scale(0.8);
+    }
+  }
+
+  @keyframes trail-left-in {
+    0% {
+      opacity: 0;
+      transform: translateX(-30px) rotate(-24deg) scaleX(0.3);
+    }
+
+    48% {
+      opacity: 0.8;
+      transform: translateX(0) rotate(-24deg) scaleX(1);
+    }
+
+    70%,
+    100% {
+      opacity: 0;
+      transform: translateX(20px) rotate(-24deg) scaleX(0.4);
+    }
+  }
+
+  @keyframes trail-right-in {
+    0% {
+      opacity: 0;
+      transform: translateX(30px) rotate(24deg) scaleX(0.3);
+    }
+
+    48% {
+      opacity: 0.8;
+      transform: translateX(0) rotate(24deg) scaleX(1);
+    }
+
+    70%,
+    100% {
+      opacity: 0;
+      transform: translateX(-20px) rotate(24deg) scaleX(0.4);
+    }
+  }
+
+  @keyframes emblem-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+
+    to {
+      opacity: 0.55;
+      transform: translateY(0);
+    }
+  }
+
   @media (min-width: 700px) {
     .category-grid {
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -330,7 +1794,7 @@ const activeCategories = categories.filter(
 
   @media (min-width: 1000px) {
     .hero-inner {
-      min-height: 650px;
+      min-height: 680px;
     }
 
     .product-grid {
@@ -338,17 +1802,53 @@ const activeCategories = categories.filter(
     }
   }
 
-  @media (max-width: 700px) {
+  @media (max-width: 900px) {
+    .hero-decoration {
+      right: -170px;
+      opacity: 0.76;
+    }
+
+    .hero-content {
+      max-width: 620px;
+    }
+  }
+
+  @media (max-width: 760px) {
     .hero-inner {
-      min-height: 600px;
+      min-height: 650px;
     }
 
     .hero-decoration {
       top: auto;
-      right: -140px;
-      bottom: -150px;
+      right: -145px;
+      bottom: -170px;
+      width: 430px;
+      height: 430px;
       transform: none;
-      opacity: 0.7;
+      opacity: 0.72;
+    }
+
+    .hero-grid {
+      background-size: 34px 34px;
+    }
+
+    .duel-swords {
+      width: 410px;
+    }
+
+    .ring-one {
+      width: 315px;
+      height: 315px;
+    }
+
+    .ring-two {
+      width: 245px;
+      height: 245px;
+    }
+
+    .ring-three {
+      width: 355px;
+      height: 355px;
     }
 
     .section-heading {
@@ -356,4 +1856,303 @@ const activeCategories = categories.filter(
       flex-direction: column;
     }
   }
+
+  @media (max-width: 700px) {
+    .hero {
+      background:
+        radial-gradient(
+          circle at 75% 68%,
+          rgba(118, 103, 168, 0.13),
+          transparent 38%
+        );
+    }
+
+    .catalog-notice {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: fit-content;
+  max-width: 100%;
+  margin-top: 22px;
+  padding: 13px 16px;
+  border: 1px solid rgba(95, 200, 216, 0.22);
+  border-radius: 14px;
+  background: rgba(16, 19, 34, 0.94);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  color: var(--color-text-strong);
+  opacity: 1;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.catalog-notice .notice-icon {
+  flex: 0 0 30px;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  background: rgba(95, 200, 216, 0.12);
+  border: 1px solid rgba(95, 200, 216, 0.2);
+  color: var(--color-cyan);
+}
+
+.catalog-notice .notice-icon svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.catalog-notice strong {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--color-text-strong);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  opacity: 1;
+}
+
+.catalog-notice small {
+  display: block;
+  max-width: 430px;
+  color: var(--color-text-muted);
+  font-size: 0.74rem;
+  line-height: 1.5;
+  opacity: 1;
+}
+
+@media (max-width: 700px) {
+  .catalog-notice {
+    width: 100%;
+    margin-top: 18px;
+    padding: 12px 13px;
+  }
+
+  .catalog-notice small {
+    max-width: none;
+  }
+}
+
+    .hero-decoration {
+      right: -130px;
+      bottom: -150px;
+      width: 390px;
+      height: 390px;
+    }
+
+    .duel-swords {
+      width: 380px;
+    }
+
+    .category-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+@media (max-width: 480px) {
+    .hero-inner {
+      min-height: 690px;
+      padding-top: 54px;
+      padding-bottom: 55px;
+    }
+
+    .hero-content {
+      max-width: 100%;
+    }
+
+    h1 {
+      font-size: clamp(2.55rem, 13vw, 3.8rem);
+    }
+
+    .hero-description {
+      font-size: 0.98rem;
+    }
+
+    .catalog-notice {
+      padding: 11px 12px;
+    }
+
+    .catalog-notice small {
+      font-size: 0.69rem;
+    }
+
+    .hero-actions {
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+
+    .primary-button,
+    .secondary-button {
+      width: 100%;
+    }
+
+    .hero-status {
+      max-width: 300px;
+      font-size: 0.72rem;
+    }
+
+    .hero-decoration {
+      right: -125px;
+      bottom: -125px;
+      width: 340px;
+      height: 340px;
+      opacity: 0.68;
+    }
+
+    .duel-swords {
+      width: 340px;
+    }
+
+    .ring-one {
+      width: 260px;
+      height: 260px;
+    }
+
+    .ring-two {
+      width: 205px;
+      height: 205px;
+    }
+
+    .ring-three {
+      width: 295px;
+      height: 295px;
+    }
+
+    .hero-emblem {
+      right: 17%;
+      bottom: 11%;
+      font-size: 0.5rem;
+    }
+
+    .category-grid {
+      gap: 10px;
+    }
+
+    .category-card {
+      min-height: 150px;
+      padding: 17px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-content,
+    .hero-eyebrow,
+    .hero-glow,
+    .hero-particle,
+    .hero-rune,
+    .hero-aura,
+    .orb,
+    .sword-ring,
+    .sword-left,
+    .sword-right,
+    .impact,
+    .spark,
+    .duel-trail,
+    .hero-emblem,
+    .eyebrow-dot,
+    h1 span,
+    .catalog-notice {
+      animation: none;
+    }
+
+    .sword-left {
+      opacity: 1;
+      transform: translate(0, 0) rotate(-38deg) scale(1);
+    }
+
+    .sword-right {
+      opacity: 1;
+      transform: translate(0, 0) rotate(38deg) scale(1);
+    }
+
+    .impact {
+      opacity: 0.35;
+      transform: scale(1);
+    }
+
+    .primary-button,
+    .secondary-button,
+    .category-card,
+    .category-icon,
+    .category-arrow,
+    .section-link {
+      transition: none;
+    }
+
+    .primary-button::before {
+      display: none;
+    }
+  }
+
+/* =========================================================
+   DUEL — AJUSTE RESPONSIVO
+   ========================================================= */
+
+@media (max-width: 700px) {
+  .hero-decoration {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .duel-stage {
+    inset: 0;
+    width: 100%;
+    display: grid;
+    place-items: center;
+  }
+
+  .duel-swords {
+    width: min(390px, 112%);
+    max-width: none;
+    transform: translateX(0);
+  }
+
+  .duel-trail {
+    width: 95px;
+  }
+
+  .trail-left {
+    left: 2%;
+  }
+
+  .trail-right {
+    right: 2%;
+  }
+}
+
+@media (max-width: 480px) {
+  .duel-swords {
+    width: 355px;
+    max-width: 112%;
+  }
+
+  .duel-trail {
+    width: 70px;
+  }
+
+  .trail-left {
+    left: 0;
+  }
+
+  .trail-right {
+    right: 0;
+  }
+}
+
+@media (max-width: 380px) {
+  .duel-swords {
+    width: 330px;
+    max-width: 112%;
+  }
+}
 </style>

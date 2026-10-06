@@ -1,0 +1,425 @@
+local_backend: true
+
+backend:
+  name: git-gateway
+  branch: master
+
+media_folder: "public/images/products"
+public_folder: "/images/products"
+
+collections:
+
+  # =========================================================
+  # PRODUTOS
+  # =========================================================
+
+  - name: "products"
+    label: "Produtos"
+    label_singular: "Produto"
+    folder: "src/data/products"
+    create: true
+    identifier_field: "name"
+    slug: "{{fields.slug}}"
+    format: "json"
+    media_folder: "../../../public/images/products/{{fields.slug}}"
+    public_folder: "/images/products/{{fields.slug}}"
+
+    fields:
+
+      - label: "ID"
+        name: "id"
+        widget: "string"
+        hint: "Identificador único do produto."
+
+      - label: "Nome"
+        name: "name"
+        widget: "string"
+
+      - label: "Slug"
+        name: "slug"
+        widget: "string"
+        hint: "Use apenas letras minúsculas, números e hífens. Exemplo: pelucia-cogumelo-deluxe"
+
+      - label: "Descrição curta"
+        name: "shortDescription"
+        widget: "text"
+
+      - label: "Descrição completa"
+        name: "description"
+        widget: "text"
+
+      - label: "Categoria"
+        name: "categoryId"
+        widget: "relation"
+        collection: "categories"
+        search_fields:
+          - "name"
+          - "id"
+        value_field: "id"
+        display_fields:
+          - "name"
+        hint: "Selecione uma categoria cadastrada."
+
+      - label: "Subcategoria"
+        name: "subcategory"
+        widget: "string"
+        required: false
+
+      - label: "Preço base (centavos)"
+        name: "basePriceCents"
+        widget: "number"
+        value_type: "int"
+        min: 0
+        hint: "Exemplo: R$ 35,00 = 3500."
+
+      - label: "Imagens"
+        name: "images"
+        widget: "list"
+        default: []
+        fields:
+
+          - label: "Imagem"
+            name: "src"
+            widget: "image"
+
+          - label: "Texto alternativo"
+            name: "alt"
+            widget: "string"
+
+          - label: "Posição"
+            name: "position"
+            widget: "number"
+            value_type: "int"
+            min: 1
+
+          - label: "Imagem principal"
+            name: "primary"
+            widget: "boolean"
+            default: false
+            required: false
+
+      - label: "Status"
+        name: "status"
+        widget: "select"
+        default: "disponivel"
+        options:
+          - label: "Disponível"
+            value: "disponivel"
+          - label: "Indisponível"
+            value: "indisponivel"
+          - label: "Em breve"
+            value: "em-breve"
+          - label: "Esgotado"
+            value: "esgotado"
+          - label: "Oculto"
+            value: "oculto"
+
+      - label: "SKU"
+        name: "sku"
+        widget: "string"
+
+      - label: "Produto em destaque"
+        name: "featured"
+        widget: "boolean"
+        default: false
+
+      - label: "Novidade"
+        name: "isNew"
+        widget: "boolean"
+        default: false
+
+      - label: "Tags"
+        name: "tags"
+        widget: "select"
+        multiple: true
+        default: []
+        options:
+          - label: "Geek"
+            value: "geek"
+          - label: "Colecionável"
+            value: "colecionável"
+          - label: "Presente"
+            value: "presente"
+          - label: "Anime"
+            value: "anime"
+          - label: "Games"
+            value: "games"
+          - label: "Nintendo"
+            value: "nintendo"
+          - label: "Pokémon"
+            value: "pokemon"
+          - label: "One Piece"
+            value: "one-piece"
+          - label: "Marvel"
+            value: "marvel"
+          - label: "DC"
+            value: "dc"
+          - label: "Pelúcia"
+            value: "pelúcia"
+          - label: "Chaveiro"
+            value: "chaveiro"
+          - label: "Figura"
+            value: "figura"
+          - label: "Decoração"
+            value: "decoracao"
+          - label: "Oferta"
+            value: "oferta"
+          - label: "Novidade"
+            value: "novidade"
+
+      - label: "Canais"
+        name: "channels"
+        widget: "list"
+        default: []
+        fields:
+
+          - label: "Canal oficial"
+            name: "channelId"
+            widget: "relation"
+            collection: "channels"
+            search_fields:
+              - "name"
+              - "id"
+              - "type"
+            value_field: "id"
+            display_fields:
+              - "name"
+
+          - label: "Ativo"
+            name: "active"
+            widget: "boolean"
+            default: true
+
+          - label: "Preço no canal (centavos)"
+            name: "price"
+            widget: "number"
+            value_type: "int"
+            min: 0
+            required: false
+            hint: "Deixe vazio para usar o preço base."
+
+          - label: "Promoção"
+            name: "promotionId"
+            widget: "relation"
+            collection: "promotions"
+            search_fields:
+              - "name"
+              - "id"
+            value_field: "id"
+            display_fields:
+              - "name"
+            required: false
+
+          - label: "Mensagem"
+            name: "message"
+            widget: "text"
+            required: false
+            default: "Olá! Tenho interesse no produto {produto}. Gostaria de saber mais informações."
+            hint: "Deixe a mensagem padrão ou personalize. Variáveis: {produto}, {preço}, {categoria}, {sku}."
+
+      - label: "Criado em"
+        name: "createdAt"
+        widget: "string"
+        hint: "Data de criação do produto."
+
+      - label: "Atualizado em"
+        name: "updatedAt"
+        widget: "string"
+        hint: "Data da última atualização."
+
+
+  # =========================================================
+  # CATEGORIAS
+  # =========================================================
+
+  - name: "categories"
+    label: "Categorias"
+    label_singular: "Categoria"
+    folder: "src/data/categories"
+    create: true
+    identifier_field: "name"
+    slug: "{{fields.slug}}"
+    format: "json"
+
+    fields:
+
+      - label: "ID"
+        name: "id"
+        widget: "string"
+        hint: "Identificador usado internamente pelo catálogo."
+
+      - label: "Nome"
+        name: "name"
+        widget: "string"
+
+      - label: "Slug"
+        name: "slug"
+        widget: "string"
+
+      - label: "Descrição"
+        name: "description"
+        widget: "text"
+        required: false
+
+      - label: "Imagem"
+        name: "image"
+        widget: "image"
+        required: false
+
+      - label: "Ativa"
+        name: "active"
+        widget: "boolean"
+        default: true
+
+
+  # =========================================================
+  # CANAIS OFICIAIS
+  # =========================================================
+
+  - name: "channels"
+    label: "Canais oficiais"
+    label_singular: "Canal oficial"
+    folder: "src/data/channels"
+    create: true
+    identifier_field: "name"
+    slug: "{{fields.id}}"
+    format: "json"
+
+    fields:
+
+      - label: "ID"
+        name: "id"
+        widget: "string"
+        hint: "Exemplo: whatsapp, instagram, mercado-livre, shopee."
+
+      - label: "Nome"
+        name: "name"
+        widget: "string"
+
+      - label: "Tipo"
+        name: "type"
+        widget: "select"
+        options:
+          - label: "WhatsApp"
+            value: "whatsapp"
+          - label: "Instagram"
+            value: "instagram"
+          - label: "Mercado Livre"
+            value: "mercado-livre"
+          - label: "Shopee"
+            value: "shopee"
+          - label: "Outro"
+            value: "outro"
+
+      - label: "Finalidade"
+        name: "purpose"
+        widget: "select"
+        default: "venda"
+        options:
+          - label: "Divulgação"
+            value: "divulgacao"
+          - label: "Contato"
+            value: "contato"
+          - label: "Venda"
+            value: "venda"
+
+      - label: "URL oficial"
+        name: "url"
+        widget: "string"
+        required: false
+        hint: "Somente o endereço oficial da Side Quest."
+
+      - label: "Ativo"
+        name: "active"
+        widget: "boolean"
+        default: false
+
+      - label: "Exibir nos produtos"
+        name: "showOnProducts"
+        widget: "boolean"
+        default: false
+
+
+  # =========================================================
+  # PROMOÇÕES
+  # =========================================================
+
+  - name: "promotions"
+    label: "Promoções"
+    label_singular: "Promoção"
+    folder: "src/data/promotions"
+    create: true
+    identifier_field: "id"
+    path: "{{id}}"
+    format: "json"
+
+    fields:
+
+      - label: "ID"
+        name: "id"
+        widget: "string"
+
+      - label: "Nome"
+        name: "name"
+        widget: "string"
+
+      - label: "Status"
+        name: "status"
+        widget: "select"
+        default: "agendada"
+        options:
+          - label: "Agendada"
+            value: "agendada"
+          - label: "Ativa"
+            value: "ativa"
+          - label: "Encerrada"
+            value: "encerrada"
+
+      - label: "Data inicial"
+        name: "startDate"
+        widget: "datetime"
+        required: false
+
+      - label: "Data final"
+        name: "endDate"
+        widget: "datetime"
+        required: false
+
+      - label: "Desconto percentual"
+        name: "discountPercent"
+        widget: "number"
+        value_type: "float"
+        min: 0
+        max: 100
+        required: false
+
+      - label: "Desconto em centavos"
+        name: "discountAmount"
+        widget: "number"
+        value_type: "int"
+        min: 0
+        required: false
+
+      - label: "Texto"
+        name: "text"
+        widget: "text"
+        required: false
+
+      - label: "Cupom"
+        name: "coupon"
+        widget: "string"
+        required: false
+
+      - label: "Canais"
+        name: "channelIds"
+        widget: "relation"
+        collection: "channels"
+        multiple: true
+        search_fields:
+          - "name"
+          - "id"
+          - "type"
+        value_field: "id"
+        display_fields:
+          - "name"
+        required: false

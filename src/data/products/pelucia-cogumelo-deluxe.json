@@ -1,0 +1,50 @@
+{
+  "shortDescription": "Pelúcia temática para fãs do universo geek.",
+  "name": "Pelúcia Cogumelo Deluxe",
+  "slug": "pelucia-cogumelo-deluxe",
+  "featured": true,
+  "updatedAt": "2026-10-06",
+  "channels": [
+    {
+      "channelId": "whatsapp",
+      "active": true,
+      "message": "Olá! Tenho interesse no {produto}. Vi que está por {preço}. É da categoria {categoria} e o SKU é {sku}."
+    }
+  ],
+  "status": "disponivel",
+  "basePriceCents": 5490,
+  "isNew": true,
+  "images": [
+    {
+      "src": "/images/products/pelucia-cogumelo-deluxe/01.png",
+      "alt": "Pelúcia Cogumelo Deluxe — imagem principal",
+      "position": 1,
+      "primary": true
+    },
+    {
+      "src": "/images/products/pelucia-cogumelo-deluxe/02.png",
+      "alt": "Pelúcia Cogumelo Deluxe — segunda imagem",
+      "position": 2
+    },
+    {
+      "src": "/images/products/pelucia-cogumelo-deluxe/03.png",
+      "alt": "Pelúcia Cogumelo Deluxe — terceira imagem",
+      "position": 3
+    },
+    {
+      "src": "/images/products/1001071423.png",
+      "alt": "Pelúcia Cogumelo Deluxe — detalhe adicional",
+      "position": 4
+    }
+  ],
+  "tags": [
+    "pelúcia",
+    "geek",
+    "colecionável"
+  ],
+  "categoryId": "pelucias",
+  "id": "pelucia-cogumelo-deluxe",
+  "createdAt": "2026-09-30",
+  "description": "Uma pelúcia colecionável com acabamento especial, ideal para decoração, presente ou para completar sua coleção.",
+  "sku": "SQ-PEL-001"
+}

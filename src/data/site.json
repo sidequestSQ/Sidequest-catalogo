@@ -1,0 +1,15 @@
+{
+  "name": "Side Quest",
+  "shortName": "Side Quest",
+  "description": "Catálogo oficial de produtos geek e colecionáveis da Side Quest.",
+  "url": "https://sidequest.store",
+  "language": "pt-BR",
+  "locale": "pt_BR",
+  "catalogPath": "/catalogo/",
+  "logo": "/logo.png",
+  "favicon": "/favicon.svg",
+  "defaultOgImage": "/og-image.svg",
+  "footer": {
+    "description": "Produtos geek, colecionáveis e itens especiais para quem sempre está em uma nova aventura."
+  }
+}

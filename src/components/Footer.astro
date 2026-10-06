@@ -1,55 +1,116 @@
+---
+import { siteConfig } from '../data/site';
+import { categories } from '../data/categories';
+import { channels } from '../data/channels';
+import { isValidOfficialChannel } from '../utils/channels';
+
+const footerCategories = categories
+  .filter((category) => category.active)
+  .filter((category) => !['novidades', 'ofertas'].includes(category.id))
+  .slice(0, 4);
+
+const officialChannels = channels
+  .filter((channel) => channel.active)
+  .filter(isValidOfficialChannel)
+  .filter(
+    (channel) =>
+      channel.purpose === 'divulgacao' ||
+      channel.purpose === 'contato' ||
+      channel.purpose === 'venda'
+  );
+
+const channelLabels: Record<string, string> = {
+  instagram: 'Instagram',
+  whatsapp: 'WhatsApp',
+  'mercado-livre': 'Mercado Livre',
+  shopee: 'Shopee',
+  outro: 'Canal oficial',
+};
+---
+
 <footer class="site-footer">
   <div class="container">
     <div class="footer-main">
       <div class="footer-brand">
-        <a href="/" class="brand" aria-label="Side Quest — página inicial">
-          <span class="brand-mark" aria-hidden="true">SQ</span>
+        <a
+          href="/"
+          class="brand"
+          aria-label={`${siteConfig.name} — página inicial`}
+        >
+          <span class="brand-mark">
+            <img src={siteConfig.logo} alt={siteConfig.name} />
+          </span>
 
           <span class="brand-text">
-            <strong>Side Quest</strong>
+            <strong>{siteConfig.shortName}</strong>
             <small>CATÁLOGO GEEK</small>
           </span>
         </a>
 
-        <p>
-          Produtos geek, colecionáveis e itens especiais para quem
-          sempre está em uma nova aventura.
-        </p>
+        <p>{siteConfig.footer.description}</p>
+
+        <a href={siteConfig.catalogPath} class="footer-catalog-link">
+          <span>Explorar catálogo</span>
+
+          <svg
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path d="M5 12h13" />
+            <path d="m13 6 6 6-6 6" />
+          </svg>
+        </a>
       </div>
 
       <nav class="footer-nav" aria-label="Navegação do rodapé">
-        <div>
+        <div class="footer-column">
           <h2>Navegação</h2>
 
           <a href="/">Início</a>
-          <a href="/catalogo/">Catálogo</a>
+          <a href={siteConfig.catalogPath}>Catálogo</a>
         </div>
 
-        <div>
+        <div class="footer-column">
           <h2>Categorias</h2>
 
-          <a href="/catalogo/?categoria=pelucias">Pelúcias</a>
-          <a href="/catalogo/?categoria=chaveiros">Chaveiros</a>
-          <a href="/catalogo/?categoria=colecionaveis">
-            Colecionáveis
-          </a>
+          {footerCategories.map((category) => (
+            <a href={`/catalogo/?categoria=${category.slug}`}>
+              {category.name}
+            </a>
+          ))}
         </div>
 
-        <div>
+        <div class="footer-column">
           <h2>Oficial</h2>
 
-          <span>Instagram</span>
-          <span>WhatsApp</span>
+          {officialChannels.map((channel) => (
+            <a
+              href={channel.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${channelLabels[channel.type] ?? channel.name} — canal oficial da Side Quest`}
+            >
+              {channelLabels[channel.type] ?? channel.name}
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M14 5h5v5" />
+                <path d="m19 5-9 9" />
+                <path d="M19 13v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5" />
+              </svg>
+            </a>
+          ))}
+
+          {officialChannels.length === 0 && (
+            <span class="footer-empty">Canais em breve</span>
+          )}
         </div>
       </nav>
     </div>
 
     <div class="footer-bottom">
-      <span>
-        © {new Date().getFullYear()} Side Quest
-      </span>
+      <span>© {new Date().getFullYear()} {siteConfig.name}</span>
 
-      <span>
+      <span class="footer-status">
+        <i aria-hidden="true"></i>
         Catálogo oficial
       </span>
     </div>
@@ -58,121 +119,302 @@
 
 <style>
   .site-footer {
-    margin-top: 80px;
+    position: relative;
+    margin-top: 88px;
     border-top: 1px solid var(--color-border);
-    background: var(--color-surface);
+    background:
+      radial-gradient(
+        circle at 15% 0%,
+        var(--color-primary-soft),
+        transparent 32%
+      ),
+      radial-gradient(
+        circle at 85% 100%,
+        var(--color-cyan-glow),
+        transparent 28%
+      ),
+      var(--color-surface);
+    overflow: hidden;
+  }
+
+  .site-footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--color-primary),
+      var(--color-cyan),
+      transparent
+    );
+    opacity: 0.45;
   }
 
   .footer-main {
+    position: relative;
     display: grid;
-    gap: 48px;
-    padding: 56px 0 44px;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1.75fr);
+    gap: 64px;
+    padding: 58px 0 46px;
   }
 
   .footer-brand {
-    max-width: 400px;
+    min-width: 0;
+    max-width: 420px;
   }
 
   .brand {
     display: inline-flex;
     align-items: center;
-    gap: 11px;
+    gap: 12px;
+    color: inherit;
+    text-decoration: none;
   }
 
   .brand-mark {
+    position: relative;
     display: grid;
-    width: 40px;
-    height: 40px;
     place-items: center;
-    border-radius: 11px;
-    background: linear-gradient(
-      135deg,
-      var(--color-primary),
-      var(--color-accent)
-    );
-    color: var(--color-text);
-    font-size: 0.8rem;
-    font-weight: 950;
+    width: 46px;
+    height: 46px;
+    flex: 0 0 46px;
+    border: 1px solid var(--color-border-strong);
+    border-radius: 13px;
+    background: var(--color-surface-soft);
+    overflow: hidden;
+  }
+
+  .brand-mark::after {
+    content: '';
+    position: absolute;
+    inset: 5px;
+    border: 1px solid var(--color-primary);
+    border-radius: 9px;
+    opacity: 0.25;
+  }
+
+  .brand-mark img {
+    position: relative;
+    z-index: 1;
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
   }
 
   .brand-text {
     display: flex;
     flex-direction: column;
-    line-height: 1.1;
+    gap: 2px;
   }
 
   .brand-text strong {
-    font-size: 1rem;
+    color: var(--color-text-strong);
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
   }
 
   .brand-text small {
-    margin-top: 4px;
-    color: var(--color-text-muted);
-    font-size: 0.58rem;
-    font-weight: 800;
-    letter-spacing: 0.14em;
+    color: var(--color-text-soft);
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
   }
 
   .footer-brand > p {
-    margin: 20px 0 0;
+    max-width: 390px;
+    margin: 22px 0 20px;
     color: var(--color-text-muted);
-    font-size: 0.9rem;
+    font-size: 0.88rem;
+    line-height: 1.75;
+  }
+
+  .footer-catalog-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--color-cyan);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition:
+      color var(--transition-base),
+      transform var(--transition-base);
+  }
+
+  .footer-catalog-link svg {
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: transform var(--transition-base);
+  }
+
+  .footer-catalog-link:hover {
+    color: var(--color-text-strong);
+    transform: translateX(2px);
+  }
+
+  .footer-catalog-link:hover svg {
+    transform: translateX(3px);
   }
 
   .footer-nav {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 32px 24px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px;
+    min-width: 0;
   }
 
-  .footer-nav div {
+  .footer-column {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 9px;
+    gap: 10px;
+    min-width: 0;
   }
 
-  .footer-nav h2 {
-    margin: 0 0 6px;
-    font-size: 0.85rem;
+  .footer-column h2 {
+    margin: 0 0 8px;
+    color: var(--color-text-strong);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
   }
 
-  .footer-nav a,
-  .footer-nav span {
+  .footer-column a,
+  .footer-empty {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    width: fit-content;
+    max-width: 100%;
     color: var(--color-text-muted);
-    font-size: 0.85rem;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    text-decoration: none;
+    transition:
+      color var(--transition-base),
+      transform var(--transition-base);
   }
 
-  .footer-nav a:hover {
-    color: var(--color-text);
+  .footer-column a:hover {
+    color: var(--color-text-strong);
+    transform: translateX(2px);
+  }
+
+  .footer-column:nth-child(2) a:hover {
+    color: var(--color-primary-light);
+  }
+
+  .footer-column:nth-child(3) a:hover {
+    color: var(--color-cyan);
+  }
+
+  .footer-column a svg {
+    width: 12px;
+    height: 12px;
+    flex: 0 0 12px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0.7;
+  }
+
+  .footer-empty {
+    color: var(--color-text-soft);
   }
 
   .footer-bottom {
+    position: relative;
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    gap: 20px;
-    padding: 20px 0;
+    gap: 16px;
+    padding: 18px 0 22px;
     border-top: 1px solid var(--color-border);
-    color: var(--color-text-muted);
-    font-size: 0.78rem;
+    color: var(--color-text-soft);
+    font-size: 0.7rem;
   }
 
-  @media (min-width: 760px) {
+  .footer-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .footer-status i {
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-success);
+    box-shadow: 0 0 10px rgba(117, 165, 138, 0.45);
+  }
+
+  @media (max-width: 900px) {
     .footer-main {
-      grid-template-columns: 1fr 1.4fr;
-      align-items: start;
+      grid-template-columns: 1fr;
+      gap: 42px;
+    }
+
+    .footer-brand {
+      max-width: 620px;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .site-footer {
+      margin-top: 64px;
+    }
+
+    .footer-main {
+      padding: 44px 0 34px;
+      gap: 36px;
     }
 
     .footer-nav {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 32px 22px;
+    }
+
+    .footer-column:nth-child(3) {
+      grid-column: 1 / -1;
     }
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: 420px) {
+    .footer-nav {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .footer-column a,
+    .footer-empty {
+      font-size: 0.76rem;
+    }
+
     .footer-bottom {
       align-items: flex-start;
       flex-direction: column;
-      gap: 5px;
+      gap: 8px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .footer-catalog-link,
+    .footer-catalog-link svg,
+    .footer-column a {
+      transition: none;
     }
   }
 </style>

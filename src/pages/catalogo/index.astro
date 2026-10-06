@@ -3,6 +3,32 @@ import Layout from '../../layouts/Layout.astro';
 import ProductCard from '../../components/ProductCard.astro';
 import { products } from '../../data/products';
 import { categories } from '../../data/categories';
+import { getActivePromotion } from '../../utils/promotions';
+
+const visibleProducts = products.filter(
+  (product) => product.status !== 'oculto'
+);
+
+const activeCategories = categories.filter(
+  (category) =>
+    category.active &&
+    category.id !== 'novidades' &&
+    category.id !== 'ofertas'
+);
+
+const productsWithActivePromotion = new Set(
+  visibleProducts
+    .filter((product) => getActivePromotion(product))
+    .map((product) => product.id)
+);
+
+const newProducts = visibleProducts.filter(
+  (product) => product.isNew
+);
+
+const offerProducts = visibleProducts.filter(
+  (product) => productsWithActivePromotion.has(product.id)
+);
 ---
 
 <Layout
@@ -12,104 +38,250 @@ import { categories } from '../../data/categories';
   <section class="catalog-page">
     <div class="container">
       <header class="catalog-header">
-        <span class="eyebrow">CATÁLOGO</span>
+        <div class="catalog-heading">
+          <span class="eyebrow">
+            <span class="eyebrow-mark" aria-hidden="true"></span>
+            CATÁLOGO SIDE QUEST
+          </span>
 
-        <h1>Encontre sua próxima Side Quest.</h1>
+          <h1>
+            Encontre sua próxima
+            <span>Side Quest.</span>
+          </h1>
 
-        <p>
-          Explore nossos produtos geek, colecionáveis e novidades.
-        </p>
+          <p>
+            Explore produtos geek, colecionáveis, novidades e itens
+            selecionados para a sua próxima aventura.
+          </p>
+        </div>
+
+        <div class="catalog-meta" aria-label="Informações do catálogo">
+          <div class="meta-line"></div>
+
+          <div class="meta-item">
+            <svg
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path d="M12 3v18M3 12h18" />
+              <path d="m7 7 10 10M17 7 7 17" />
+            </svg>
+
+            <span>
+              <strong>{visibleProducts.length}</strong>
+              itens no catálogo
+            </span>
+          </div>
+
+          <div class="meta-item">
+            <svg
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path d="M12 3 4 7v5c0 4.5 3.2 7.5 8 9 4.8-1.5 8-4.5 8-9V7l-8-4Z" />
+              <path d="m9 12 2 2 4-4" />
+            </svg>
+
+            <span>
+              Compra pelos canais oficiais
+            </span>
+          </div>
+        </div>
       </header>
 
-      <div
+      <section
         class="catalog-tools"
         aria-label="Ferramentas do catálogo"
       >
-        <div class="search-box">
-          <label for="product-search">
-            Buscar produto
-          </label>
+        <div class="tools-heading">
+          <div class="tools-icon" aria-hidden="true">
+            <svg
+              viewBox="0 0 24 24"
+              focusable="false"
+            >
+              <circle cx="11" cy="11" r="6.5" />
+              <path d="m16 16 4.5 4.5" />
+            </svg>
+          </div>
 
-          <input
-            id="product-search"
-            type="search"
-            placeholder="Buscar por nome, produto ou palavra-chave..."
-            autocomplete="off"
-          />
+          <div>
+            <strong>Encontre o que procura</strong>
+            <span>Busque, filtre ou organize os produtos.</span>
+          </div>
         </div>
 
-        <div class="category-box">
-          <label for="category-filter">
-            Categoria
-          </label>
+        <div class="catalog-controls">
+          <div class="search-box control-field">
+            <label for="product-search">
+              Buscar produto
+            </label>
 
-          <select id="category-filter">
-            <option value="">
-              Todas as categorias
-            </option>
+            <div class="input-shell">
+              <svg
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <circle cx="11" cy="11" r="6.5" />
+                <path d="m16 16 4.5 4.5" />
+              </svg>
 
-            {categories
-              .filter((category) => category.active)
-              .map((category) => (
-                <option value={category.id}>
-                  {category.name}
+              <input
+                id="product-search"
+                type="search"
+                placeholder="Nome, palavra-chave ou SKU..."
+                autocomplete="off"
+              />
+            </div>
+          </div>
+
+          <div class="category-box control-field">
+            <label for="category-filter">
+              Categoria
+            </label>
+
+            <div class="select-shell">
+              <svg
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path d="M4 6h16M7 12h10M10 18h4" />
+              </svg>
+
+              <select id="category-filter">
+                <option value="">
+                  Todas as categorias
                 </option>
-              ))}
-          </select>
+
+                <option value="__novidades">
+                  Novidades
+                </option>
+
+                <option value="__ofertas">
+                  Ofertas
+                </option>
+
+                {activeCategories.map((category) => (
+                  <option value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div class="sort-box control-field">
+            <label for="sort-filter">
+              Ordenar
+            </label>
+
+            <div class="select-shell">
+              <svg
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path d="M8 6h12M8 12h8M8 18h4" />
+                <path d="M4 6v12M2 16l2 2 2-2" />
+              </svg>
+
+              <select id="sort-filter">
+                <option value="recentes">
+                  Mais recentes
+                </option>
+
+                <option value="nome-asc">
+                  Nome: A–Z
+                </option>
+
+                <option value="preco-asc">
+                  Preço: menor → maior
+                </option>
+
+                <option value="preco-desc">
+                  Preço: maior → menor
+                </option>
+              </select>
+            </div>
+          </div>
+
+          <button
+            id="clear-filters"
+            class="clear-button"
+            type="button"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              focusable="false"
+            >
+              <path d="M4 7h16M9 7V4h6v3M7 7l1 13h8l1-13" />
+              <path d="M10 11v5M14 11v5" />
+            </svg>
+
+            <span>Limpar filtros</span>
+          </button>
+        </div>
+      </section>
+
+      <div class="catalog-results-bar">
+        <div
+          class="catalog-summary"
+          aria-live="polite"
+        >
+          <span class="summary-dot" aria-hidden="true"></span>
+
+          <strong id="product-count">
+            {visibleProducts.length}
+          </strong>
+
+          <span id="product-count-label">
+            produtos encontrados
+          </span>
         </div>
 
-        <button
-          id="clear-filters"
-          class="clear-button"
-          type="button"
-        >
-          Limpar filtros
-        </button>
-      </div>
-
-      <div
-        class="catalog-summary"
-        aria-live="polite"
-      >
-        <strong id="product-count">
-          {
-            products.filter(
-              (product) =>
-                product.status !== 'oculto'
-            ).length
-          }
-        </strong>
-
-        <span>produtos encontrados</span>
+        <div class="results-decoration" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
       </div>
 
       <div
         class="product-grid"
         id="product-grid"
       >
-        {products
-          .filter(
-            (product) =>
-              product.status !== 'oculto'
-          )
-          .map((product) => (
-            <div
-              class="product-item"
-              data-category={product.categoryId}
-              data-search={[
-                product.name,
-                product.shortDescription,
-                product.description,
-                product.sku,
-                product.subcategory ?? '',
-                ...product.tags,
-              ]
-                .join(' ')
-                .toLocaleLowerCase('pt-BR')}
-            >
-              <ProductCard product={product} />
-            </div>
-          ))}
+        {visibleProducts.map((product) => (
+          <div
+            class="product-item"
+            data-product-id={product.id}
+            data-category={product.categoryId}
+            data-new={product.isNew ? 'true' : 'false'}
+            data-offer={
+              productsWithActivePromotion.has(product.id)
+                ? 'true'
+                : 'false'
+            }
+            data-created-at={product.createdAt}
+            data-price={product.basePriceCents}
+            data-name={product.name}
+            data-search={[
+              product.name,
+              product.shortDescription,
+              product.description,
+              product.sku,
+              product.subcategory ?? '',
+              ...product.tags,
+            ]
+              .join(' ')
+              .toLocaleLowerCase('pt-BR')}
+          >
+            <ProductCard product={product} />
+          </div>
+        ))}
       </div>
 
       <div
@@ -117,13 +289,22 @@ import { categories } from '../../data/categories';
         class="no-results"
         hidden
       >
+        <div class="no-results-icon" aria-hidden="true">
+          <svg
+            viewBox="0 0 24 24"
+            focusable="false"
+          >
+            <circle cx="10.5" cy="10.5" r="6.5" />
+            <path d="m16 16 4 4M8 8l5 5M13 8l-5 5" />
+          </svg>
+        </div>
+
         <strong>
           Nenhum produto encontrado.
         </strong>
 
         <p>
-          Tente buscar outro termo ou remover
-          algum filtro.
+          Tente buscar outro termo ou remover algum filtro.
         </p>
       </div>
     </div>
@@ -141,10 +322,20 @@ import { categories } from '../../data/categories';
       '#category-filter'
     ) as HTMLSelectElement | null;
 
+  const sortFilter =
+    document.querySelector(
+      '#sort-filter'
+    ) as HTMLSelectElement | null;
+
   const clearButton =
     document.querySelector(
       '#clear-filters'
     ) as HTMLButtonElement | null;
+
+  const productGrid =
+    document.querySelector(
+      '#product-grid'
+    ) as HTMLElement | null;
 
   const productItems = Array.from(
     document.querySelectorAll<HTMLElement>(
@@ -157,10 +348,176 @@ import { categories } from '../../data/categories';
       '#product-count'
     ) as HTMLElement | null;
 
+  const productCountLabel =
+    document.querySelector(
+      '#product-count-label'
+    ) as HTMLElement | null;
+
   const noResults =
     document.querySelector(
       '#no-results'
     ) as HTMLElement | null;
+
+  function updateUrlCategory(
+    selectedCategory: string
+  ) {
+    const params =
+      new URLSearchParams(
+        window.location.search
+      );
+
+    if (selectedCategory) {
+      if (
+        selectedCategory ===
+        '__novidades'
+      ) {
+        params.set(
+          'categoria',
+          'novidades'
+        );
+      } else if (
+        selectedCategory ===
+        '__ofertas'
+      ) {
+        params.set(
+          'categoria',
+          'ofertas'
+        );
+      } else {
+        const category =
+          categories.find(
+            (item) =>
+              item.id === selectedCategory
+          );
+
+        if (category) {
+          params.set(
+            'categoria',
+            category.slug
+          );
+        }
+      }
+    } else {
+      params.delete('categoria');
+    }
+
+    const queryString =
+      params.toString();
+
+    const newUrl =
+      queryString
+        ? `${window.location.pathname}?${queryString}`
+        : window.location.pathname;
+
+    window.history.replaceState(
+      {},
+      '',
+      newUrl
+    );
+  }
+
+  function updateSummary(
+    visibleProducts: number
+  ) {
+    if (productCount) {
+      productCount.textContent =
+        String(visibleProducts);
+    }
+
+    if (productCountLabel) {
+      productCountLabel.textContent =
+        visibleProducts === 1
+          ? 'produto encontrado'
+          : 'produtos encontrados';
+    }
+  }
+
+  function sortProductItems() {
+    if (!productGrid) {
+      return;
+    }
+
+    const sortValue =
+      sortFilter?.value ?? 'recentes';
+
+    const sortedItems =
+      [...productItems].sort(
+        (a, b) => {
+          if (sortValue === 'nome-asc') {
+            const nameA =
+              a.dataset.name ?? '';
+
+            const nameB =
+              b.dataset.name ?? '';
+
+            return nameA.localeCompare(
+              nameB,
+              'pt-BR',
+              {
+                sensitivity: 'base',
+              }
+            );
+          }
+
+          if (
+            sortValue ===
+            'preco-asc'
+          ) {
+            const priceA =
+              Number(
+                a.dataset.price ?? 0
+              );
+
+            const priceB =
+              Number(
+                b.dataset.price ?? 0
+              );
+
+            return priceA - priceB;
+          }
+
+          if (
+            sortValue ===
+            'preco-desc'
+          ) {
+            const priceA =
+              Number(
+                a.dataset.price ?? 0
+              );
+
+            const priceB =
+              Number(
+                b.dataset.price ?? 0
+              );
+
+            return priceB - priceA;
+          }
+
+          const dateA =
+            Date.parse(
+              a.dataset.createdAt ?? ''
+            );
+
+          const dateB =
+            Date.parse(
+              b.dataset.createdAt ?? ''
+            );
+
+          return (
+            (Number.isNaN(dateB)
+              ? 0
+              : dateB) -
+            (Number.isNaN(dateA)
+              ? 0
+              : dateA)
+          );
+        }
+      );
+
+    sortedItems.forEach((item) => {
+      productGrid.appendChild(item);
+    });
+  }
 
   function filterProducts() {
     const searchTerm =
@@ -177,16 +534,40 @@ import { categories } from '../../data/categories';
       const category =
         item.dataset.category ?? '';
 
+      const isNew =
+        item.dataset.new === 'true';
+
+      const isOffer =
+        item.dataset.offer === 'true';
+
       const searchableText =
         item.dataset.search ?? '';
 
       const matchesSearch =
         !searchTerm ||
-        searchableText.includes(searchTerm);
+        searchableText.includes(
+          searchTerm
+        );
 
-      const matchesCategory =
-        !selectedCategory ||
-        category === selectedCategory;
+      let matchesCategory = true;
+
+      if (
+        selectedCategory ===
+        '__novidades'
+      ) {
+        matchesCategory = isNew;
+      } else if (
+        selectedCategory ===
+        '__ofertas'
+      ) {
+        matchesCategory = isOffer;
+      } else if (
+        selectedCategory
+      ) {
+        matchesCategory =
+          category ===
+          selectedCategory;
+      }
 
       const visible =
         matchesSearch &&
@@ -199,10 +580,11 @@ import { categories } from '../../data/categories';
       }
     });
 
-    if (productCount) {
-      productCount.textContent =
-        String(visibleProducts);
-    }
+    sortProductItems();
+
+    updateSummary(
+      visibleProducts
+    );
 
     if (noResults) {
       noResults.hidden =
@@ -216,18 +598,59 @@ import { categories } from '../../data/categories';
         window.location.search
       );
 
-    const category =
+    const categorySlug =
       params.get('categoria');
 
     if (
-      categoryFilter &&
-      category &&
-      Array.from(categoryFilter.options).some(
-        (option) =>
-          option.value === category
-      )
+      !categorySlug ||
+      !categoryFilter
     ) {
-      categoryFilter.value = category;
+      return;
+    }
+
+    if (
+      categorySlug ===
+      'novidades'
+    ) {
+      categoryFilter.value =
+        '__novidades';
+
+      return;
+    }
+
+    if (
+      categorySlug ===
+      'ofertas'
+    ) {
+      categoryFilter.value =
+        '__ofertas';
+
+      return;
+    }
+
+    const category =
+      activeCategories.find(
+        (item) =>
+          item.slug ===
+          categorySlug
+      );
+
+    if (!category) {
+      return;
+    }
+
+    const optionExists =
+      Array.from(
+        categoryFilter.options
+      ).some(
+        (option) =>
+          option.value ===
+          category.id
+      );
+
+    if (optionExists) {
+      categoryFilter.value =
+        category.id;
     }
   }
 
@@ -236,9 +659,23 @@ import { categories } from '../../data/categories';
     filterProducts
   );
 
-  categoryFilter?.addEventListener(
+  sortFilter?.addEventListener(
     'change',
     filterProducts
+  );
+
+  categoryFilter?.addEventListener(
+    'change',
+    () => {
+      const selectedCategory =
+        categoryFilter.value;
+
+      updateUrlCategory(
+        selectedCategory
+      );
+
+      filterProducts();
+    }
   );
 
   clearButton?.addEventListener(
@@ -252,6 +689,13 @@ import { categories } from '../../data/categories';
         categoryFilter.value = '';
       }
 
+      if (sortFilter) {
+        sortFilter.value =
+          'recentes';
+      }
+
+      updateUrlCategory('');
+
       filterProducts();
 
       searchInput?.focus();
@@ -264,114 +708,448 @@ import { categories } from '../../data/categories';
 
 <style>
   .catalog-page {
-    padding: 64px 0 80px;
+    position: relative;
+    overflow: hidden;
+    padding: 78px 0 104px;
+  }
+
+  .catalog-page::before {
+    content: '';
+    position: absolute;
+    top: 80px;
+    left: 50%;
+    width: 760px;
+    height: 420px;
+    transform: translateX(-50%);
+    pointer-events: none;
+    background:
+      radial-gradient(
+        circle,
+        var(--color-cyan-glow) 0%,
+        transparent 68%
+      );
+    opacity: 0.45;
+  }
+
+  .catalog-page::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -120px;
+    width: 360px;
+    height: 360px;
+    border: 1px solid rgba(176, 106, 200, 0.08);
+    border-radius: 50%;
+    pointer-events: none;
   }
 
   .catalog-header {
-    max-width: 720px;
-    margin-bottom: 36px;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 36px;
+    max-width: 1100px;
+    margin-bottom: 38px;
+  }
+
+  .catalog-heading {
+    max-width: 760px;
   }
 
   .eyebrow {
-    display: inline-block;
-    margin-bottom: 12px;
-    color: var(--color-primary-light);
-    font-size: 0.78rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 14px;
+    color: var(--color-cyan);
+    font-size: 0.72rem;
     font-weight: 800;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.16em;
   }
 
-  h1 {
+  .eyebrow-mark {
+    width: 7px;
+    height: 7px;
+    border: 1px solid var(--color-cyan);
+    transform: rotate(45deg);
+    box-shadow: 0 0 12px var(--color-cyan-glow);
+  }
+
+  .catalog-header h1 {
     margin: 0;
-    font-size: clamp(2rem, 6vw, 3.5rem);
-    line-height: 1.05;
+    color: var(--color-text-strong);
+    font-size: clamp(2.15rem, 5vw, 3.8rem);
+    line-height: 1.03;
     letter-spacing: -0.035em;
   }
 
+  .catalog-header h1 span {
+    color: var(--color-primary-light);
+  }
+
   .catalog-header p {
+    max-width: 650px;
     margin: 18px 0 0;
     color: var(--color-text-muted);
-    font-size: 1.05rem;
+    font-size: 1rem;
+    line-height: 1.75;
   }
 
-  .catalog-tools {
+  .catalog-meta {
     display: grid;
-    gap: 12px;
-    margin-bottom: 20px;
-    padding: 18px;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-lg);
-    background: var(--color-surface);
+    flex: 0 0 220px;
+    gap: 13px;
+    padding-bottom: 3px;
   }
 
-  .search-box,
-  .category-box {
+  .meta-line {
+    width: 44px;
+    height: 1px;
+    background: var(--color-cyan);
+    box-shadow: 0 0 14px var(--color-cyan-glow);
+  }
+
+  .meta-item {
     display: flex;
-    flex-direction: column;
-    gap: 7px;
-  }
-
-  .search-box label,
-  .category-box label {
+    align-items: center;
+    gap: 10px;
     color: var(--color-text-muted);
     font-size: 0.78rem;
+    line-height: 1.4;
+  }
+
+  .meta-item svg {
+    width: 18px;
+    height: 18px;
+    flex: 0 0 auto;
+    fill: none;
+    stroke: var(--color-cyan);
+    stroke-width: 1.45;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .meta-item strong {
+    color: var(--color-text-strong);
     font-weight: 800;
   }
 
-  input,
-  select {
-    width: 100%;
-    min-height: 48px;
+  .catalog-tools {
+    position: relative;
+    z-index: 2;
+    margin-bottom: 22px;
+    padding: 20px;
     border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background:
+      linear-gradient(
+        135deg,
+        rgba(37, 42, 61, 0.94),
+        rgba(28, 32, 50, 0.96)
+      );
+    box-shadow:
+      0 18px 42px rgba(0, 0, 0, 0.16),
+      inset 0 1px 0 rgba(255, 255, 255, 0.035);
+  }
+
+  .tools-heading {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 17px;
+  }
+
+  .tools-icon {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    place-items: center;
+    flex: 0 0 auto;
+    border: 1px solid var(--color-border-bright);
+    border-radius: 11px;
+    background: var(--color-primary-soft);
+  }
+
+  .tools-icon svg {
+    width: 19px;
+    height: 19px;
+    fill: none;
+    stroke: var(--color-cyan);
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .tools-heading strong,
+  .tools-heading span {
+    display: block;
+  }
+
+  .tools-heading strong {
+    color: var(--color-text-strong);
+    font-size: 0.9rem;
+  }
+
+  .tools-heading span {
+    margin-top: 2px;
+    color: var(--color-text-soft);
+    font-size: 0.75rem;
+  }
+
+  .catalog-controls {
+    display: grid;
+    grid-template-columns:
+      minmax(0, 1.35fr)
+      minmax(170px, 0.8fr)
+      minmax(170px, 0.8fr)
+      auto;
+    gap: 13px;
+    align-items: end;
+  }
+
+  .control-field {
+    display: grid;
+    gap: 7px;
+    min-width: 0;
+  }
+
+  .control-field label {
+    color: var(--color-text-soft);
+    font-size: 0.72rem;
+    font-weight: 750;
+    letter-spacing: 0.02em;
+  }
+
+  .input-shell,
+  .select-shell {
+    position: relative;
+  }
+
+  .input-shell svg,
+  .select-shell svg {
+    position: absolute;
+    top: 50%;
+    left: 14px;
+    z-index: 1;
+    width: 17px;
+    height: 17px;
+    transform: translateY(-50%);
+    fill: none;
+    stroke: var(--color-text-soft);
+    stroke-width: 1.55;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    pointer-events: none;
+  }
+
+  .search-box input,
+  .category-box select,
+  .sort-box select {
+    width: 100%;
+    min-height: 50px;
+    border: 1px solid var(--color-border-strong);
     border-radius: var(--radius-md);
     outline: none;
-    background: var(--color-surface-soft);
+    background: rgba(16, 19, 34, 0.82);
     color: var(--color-text);
     padding: 0 14px;
+    font: inherit;
+    font-size: 0.88rem;
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease,
+      background 0.2s ease;
   }
 
-  input::placeholder {
-    color: var(--color-text-muted);
+  .search-box input {
+    padding-left: 43px;
   }
 
-  input:focus,
-  select:focus {
-    border-color: var(--color-primary);
+  .select-shell select {
+    appearance: none;
+    padding-right: 38px;
+    cursor: pointer;
+  }
+
+  .select-shell::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 14px;
+    width: 7px;
+    height: 7px;
+    border-right: 1px solid var(--color-text-soft);
+    border-bottom: 1px solid var(--color-text-soft);
+    transform: translateY(-65%) rotate(45deg);
+    pointer-events: none;
+  }
+
+  .search-box input::placeholder {
+    color: var(--color-text-soft);
+  }
+
+  .search-box input:hover,
+  .category-box select:hover,
+  .sort-box select:hover {
+    border-color: var(--color-border-strong);
+    background: rgba(16, 19, 34, 0.96);
+  }
+
+  .search-box input:focus,
+  .category-box select:focus,
+  .sort-box select:focus {
+    border-color: var(--color-cyan);
+    box-shadow:
+      0 0 0 3px var(--color-cyan-glow),
+      0 0 22px rgba(95, 200, 216, 0.06);
+    background: rgba(16, 19, 34, 0.98);
   }
 
   .clear-button {
-    min-height: 48px;
-    align-self: end;
-    padding: 0 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 50px;
+    padding: 0 17px;
+    border: 1px solid var(--color-border-strong);
     border-radius: var(--radius-md);
-    background: transparent;
-    color: var(--color-text-muted);
+    background: rgba(118, 103, 168, 0.1);
+    color: var(--color-text);
+    font: inherit;
+    font-size: 0.82rem;
+    font-weight: 750;
     cursor: pointer;
-    font-weight: 700;
+    transition:
+      background 0.2s ease,
+      border-color 0.2s ease,
+      transform 0.2s ease,
+      color 0.2s ease;
+  }
+
+  .clear-button svg {
+    width: 17px;
+    height: 17px;
+    fill: none;
+    stroke: var(--color-text-muted);
+    stroke-width: 1.45;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: stroke 0.2s ease;
   }
 
   .clear-button:hover {
-    background: var(--color-surface-soft);
-    color: var(--color-text);
+    transform: translateY(-1px);
+    border-color: var(--color-border-bright);
+    background: var(--color-primary-soft);
+    color: var(--color-text-strong);
+  }
+
+  .clear-button:hover svg {
+    stroke: var(--color-cyan);
+  }
+
+  .catalog-results-bar {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    min-height: 34px;
+    margin-bottom: 16px;
   }
 
   .catalog-summary {
     display: flex;
     align-items: center;
-    gap: 6px;
-    margin-bottom: 20px;
+    gap: 7px;
     color: var(--color-text-muted);
-    font-size: 0.88rem;
+    font-size: 0.78rem;
   }
 
   .catalog-summary strong {
-    color: var(--color-text);
+    color: var(--color-text-strong);
+    font-size: 0.95rem;
   }
 
-  .product-grid {
+  .summary-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-cyan);
+    box-shadow: 0 0 10px var(--color-cyan-glow);
+  }
+
+  .results-decoration {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .results-decoration span {
+    display: block;
+    width: 22px;
+    height: 1px;
+    background: var(--color-border-strong);
+  }
+
+  .results-decoration span:nth-child(2) {
+    width: 42px;
+    background: var(--color-border-bright);
+  }
+
+      .product-grid {
+    position: relative;
+    z-index: 1;
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 20px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+    align-items: stretch;
+  }
+
+  .product-item {
+    min-width: 0;
+    animation: catalog-item-enter 620ms
+      cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+
+  .product-item:nth-child(2) {
+    animation-delay: 45ms;
+  }
+
+  .product-item:nth-child(3) {
+    animation-delay: 90ms;
+  }
+
+  .product-item:nth-child(4) {
+    animation-delay: 135ms;
+  }
+
+  .product-item:nth-child(5) {
+    animation-delay: 180ms;
+  }
+
+  .product-item:nth-child(6) {
+    animation-delay: 225ms;
+  }
+
+  .product-item:nth-child(n + 7) {
+    animation-delay: 270ms;
+  }
+
+  @keyframes catalog-item-enter {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   .product-item[hidden] {
@@ -379,44 +1157,209 @@ import { categories } from '../../data/categories';
   }
 
   .no-results {
-    padding: 42px 20px;
+    position: relative;
+    z-index: 1;
+    display: grid;
+    justify-items: center;
+    margin-top: 18px;
+    padding: 44px 24px;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
-    background: var(--color-surface);
+    background:
+      linear-gradient(
+        145deg,
+        rgba(37, 42, 61, 0.86),
+        rgba(28, 32, 50, 0.9)
+      );
     text-align: center;
+  }
+
+  .no-results-icon {
+    display: grid;
+    width: 50px;
+    height: 50px;
+    margin-bottom: 15px;
+    place-items: center;
+    border: 1px solid var(--color-border-strong);
+    border-radius: 15px;
+    background: var(--color-primary-soft);
+  }
+
+  .no-results-icon svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: var(--color-cyan);
+    stroke-width: 1.4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
   }
 
   .no-results strong {
     display: block;
-    font-size: 1.1rem;
+    margin-bottom: 7px;
+    color: var(--color-text-strong);
+    font-size: 0.98rem;
   }
 
   .no-results p {
-    margin: 8px 0 0;
+    max-width: 400px;
+    margin: 0;
     color: var(--color-text-muted);
+    font-size: 0.85rem;
+    line-height: 1.6;
   }
 
   @media (min-width: 600px) {
-    .catalog-tools {
-      grid-template-columns:
-        minmax(0, 1.5fr)
-        minmax(180px, 0.8fr)
-        auto;
-      align-items: end;
-      padding: 20px;
+  .product-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+  }
+}
+
+  @media (min-width: 900px) {
+  .product-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+  }
+}
+
+  @media (min-width: 1200px) {
+  .product-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 18px;
+  }
+}
+
+  @media (max-width: 900px) {
+    .catalog-header {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 22px;
     }
 
-    .product-grid {
+    .catalog-meta {
+      grid-template-columns: repeat(2, auto);
+      flex-basis: auto;
+      width: 100%;
+    }
+
+    .meta-line {
+      display: none;
+    }
+
+    .catalog-controls {
       grid-template-columns:
-        repeat(2, minmax(0, 1fr));
+        minmax(0, 1fr)
+        minmax(170px, 0.8fr);
+    }
+
+    .search-box {
+      grid-column: 1 / -1;
+    }
+
+    .clear-button {
+      width: 100%;
     }
   }
 
-  @media (min-width: 900px) {
+  @media (max-width: 600px) {
+    .catalog-page {
+      padding: 58px 0 82px;
+    }
+
+    .catalog-page::before {
+      top: 60px;
+      width: 520px;
+      height: 360px;
+    }
+
+    .catalog-header {
+      margin-bottom: 28px;
+    }
+
+    .catalog-header h1 {
+      font-size: clamp(2rem, 10vw, 2.8rem);
+    }
+
+    .catalog-header p {
+      margin-top: 14px;
+      font-size: 0.9rem;
+      line-height: 1.65;
+    }
+
+    .catalog-meta {
+      grid-template-columns: 1fr;
+      gap: 9px;
+    }
+
+    .catalog-tools {
+      padding: 15px;
+      border-radius: var(--radius-md);
+    }
+
+    .tools-heading {
+      align-items: flex-start;
+      margin-bottom: 15px;
+    }
+
+    .tools-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+    }
+.tools-heading span {
+      max-width: 250px;
+      line-height: 1.45;
+    }
+
+    .catalog-controls {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .search-box {
+      grid-column: auto;
+    }
+
+    .catalog-results-bar {
+      margin-top: 2px;
+    }
+
+    .results-decoration {
+      display: none;
+    }
+
     .product-grid {
-      grid-template-columns:
-        repeat(3, minmax(0, 1fr));
-      gap: 24px;
+      gap: 14px;
+    }
+  }
+
+  @media (max-width: 380px) {
+    .product-grid {
+      gap: 10px;
+    }
+
+    .catalog-page {
+      padding-top: 50px;
+    }
+
+    .catalog-tools {
+      padding: 13px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .search-box input,
+    .category-box select,
+    .sort-box select,
+    .clear-button,
+    .clear-button svg {
+      transition: none;
+    }
+
+    .product-item {
+      animation: none;
     }
   }
 </style>
