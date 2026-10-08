@@ -1,8 +1,11 @@
-local_backend: true
+# local_backend: true
 
 backend:
-  name: git-gateway
+  name: github
+  repo: "sidequestSQ/Sidequest-catalogo"
   branch: master
+  base_url: "https://sidequest-decap-proxy.sidequest-storebr.workers.dev"
+  auth_endpoint: "/auth"
 
 media_folder: "public/images/products"
 public_folder: "/images/products"
